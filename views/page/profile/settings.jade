@@ -1,0 +1,51 @@
+extends ../../layout/home
+
+block left_content
+
+  form.form#userSettings(method="post", action="/user/" + profile.login + "/settings", enctype="multipart/form-data")
+    #ur_step.ur_step
+      .title1 Здесь вы можете заполнить информацию о себе
+      .field
+        label(for="ur_fname") Имя
+        input#ur_fname(type="text", value=profile.fname, tabindex="1", name="fname", placeholder="Имя")
+      .field
+        label(for="ur_sname") Фамилия
+        input#ur_sname(type="text", value=profile.sname, tabindex="2", name="sname", placeholder="Фамилия")
+      .field
+        label(for="ur_tname") Отчество
+        input#ur_tname(type="text", value=profile.tname, tabindex="3", name="tname", placeholder="Отчество")
+      .field
+        label(for="ur_region") Регион
+        input#ur_region(type="text", value=profile.region, tabindex="4", name="region", placeholder="Регион")
+      .field
+        label(for="ur_city") Город
+        input#ur_city(type="text", value=profile.city, tabindex="5", name="city", placeholder="Город")
+      .field
+        label(for="ur_avatar") Аватар
+        input#ur_avatar(type="file", name="avatar", onchange="registry.fileSelect()")
+        img#ur_avatar-preview(width="500")
+
+      .field
+        label Пол
+        .radio
+          if(profile.sex == 'woman')
+            input#ur_sex_woman(type="radio", checked="checked", name="sex", value="woman")
+          else
+            input#ur_sex_woman(type="radio", name="sex", value="woman")
+          label.first-label(for="ur_sex_woman") Женщина
+            img.ur_img-dancer(src="/images/vs_girl_62.png")
+          if(profile.sex == 'man')
+            input#ur_sex_man(type="radio", checked="checked", name="sex", value="man")
+          else
+            input#ur_sex_man(type="radio", name="sex", value="man")
+          label.last-label(for="ur_sex_man") Мужчина
+            img.ur_img-dancer(src="/images/vs_boy_70.png")
+      .field
+        label(for="ur_about") О себе
+        textarea#ur_about(placeholder="О себе", tabindex="6", name="about")= profile.about
+      .field.field-right
+        input#ur_submit(type="submit", tabindex="7", value="Сохранить")
+
+block right_content
+  .userRegistryInfo
+    p Регистрируйся скорей!

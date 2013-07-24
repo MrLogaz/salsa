@@ -1,0 +1,13 @@
+header#vs-header
+  #top-panel
+    .content-wrap 
+      include menu
+      #vs-panel-user
+        if authorized
+          include user
+        else
+          include nouser
+  .top-vs.content-wrap 
+    #vs-logo
+      a(href="/"): img(src="/images/logo_150px.png", alt="Vida Salsa")
+    #vs-search

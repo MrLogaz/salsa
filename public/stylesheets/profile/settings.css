@@ -1,0 +1,17 @@
+#userSettings .first-label .ur_img-dancer {
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+  height: 44px;
+  opacity: 0;
+}
+#userSettings .last-label .ur_img-dancer {
+  position: absolute;
+  left: -4px;
+  bottom: 0;
+  height: 45px;
+  opacity: 0;
+}
+#userSettings input[type="radio"]:checked + label img {
+  opacity: 1;
+}

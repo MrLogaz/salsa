@@ -1,0 +1,7 @@
+.w-users.widget
+  .w-header 
+    a(href="/users") Пользователи
+  .w-body
+    for user in w_users
+      a.w-item-link(href="/user/" + user.login, title=user.fname + ' ' + user.sname)
+        img.w-item-img(src="/files/user/" + user.login + "/ava-60.jpg")

@@ -1,0 +1,22 @@
+.post-anons= feed.anons
+.post-event
+  .event-data
+    .adress
+      span.key Адрес:
+      span.val= feed.data.address.city + ', ' + feed.data.address.street + ', ' + feed.data.address.house
+    .dateFrom
+      span.key Начало:
+      span.val= feed.data.dateFrom.d + '.' + feed.data.dateFrom.m + '.' + feed.data.dateFrom.y + ' в ' + feed.data.dateFrom.H + ':' + feed.data.dateFrom.M
+    .dateTo
+      span.key Конец:
+      span.val= feed.data.dateTo.d + '.' + feed.data.dateTo.m + '.' + feed.data.dateTo.y + ' в ' + feed.data.dateTo.H + ':' + feed.data.dateTo.M
+    .price
+      span.key Цена:
+      span.val= feed.data.price
+    .tel
+      span.key Телефон:
+      span.val= feed.data.tel
+  if feed.preview
+    .post-preview
+      img(src="/files/post/p" + feed.id + "/prew.jpg")
+     

@@ -1,0 +1,50 @@
+extends ../../layout/home
+
+block left_content
+
+  form.form#eventCreate(method="post", action="/events/create", enctype="multipart/form-data")
+    #ur_step.ur_step
+      .title1 Создание события
+      .field
+        label(for="ec_title") Название
+        input#ec_title(type="text", tabindex="1", name="title", onchange="event_create.titleCheck($(this).val())", placeholder="Название")
+      .field
+        label(for="ec_anons") Анонс
+        textarea#ec_anons(tabindex="2", name="anons", placeholder="Краткое описание")
+      .field
+        label(for="ec_text") Текст
+        textarea#ec_text(tabindex="3", name="text", placeholder="Подробное описание")
+      .field
+        label(for="ec_region") Регион
+        input#ec_region(type="text", tabindex="4", name="region", placeholder="Регион")
+      .field
+        label(for="ec_address") Адрес
+        input#ec_address(type="text", tabindex="5", name="address", placeholder="Адрес")
+      .field
+        label(for="ec_price") Цена
+        input#ec_price(type="text", tabindex="6", name="price", placeholder="Цена")
+      .field
+        label(for="ec_avatar") Изображение
+        input#ec_avatar(type="file", name="avatar", onchange="registry.fileSelect()")
+        img#ur_avatar-preview(width="500")
+      .field.hidden
+      if user.school
+        .field
+          label Написать от 
+          .radio
+            input#ec_behalf-me(type="radio", name="behalf", value="user")
+            label.first-label(for="ec_behalf-me") моего лица
+              img.ur_img-dancer(src="/images/vs_girl_62.png")
+            input#ec_behalf-school(type="radio", name="behalf", value="school")
+            label.last-label(for="ec_behalf-school") лица Клавелины
+              img.ur_img-dancer(src="/images/vs_boy_70.png")
+      else
+        input(type="hidden", name="behalf", value="user")
+        input(type="hidden", name="behalfid", value=user.id)
+      
+      .field.field-right
+        input#ur_submit(type="submit", tabindex="7", value="Создать")
+
+block right_content
+  .userRegistryInfo
+    p Добавляй скорей новое событие

@@ -1,0 +1,22 @@
+extends ../../layout/home
+
+block left_content
+
+  form.form#userRegistry(method="post", onsubmit="return user_registry.formValidate()", action="/registry", enctype="multipart/form-data")
+    #ur_step.ur_step
+      .title1 Все поля обязательны для заполнения
+      .field
+        label(for="ur_login") Логин
+        input#ur_login(type="text", onchange="user_registry.loginCheck($(this).val())", tabindex="1", name="login", placeholder="Login")
+      .field
+        label(for="ur_pass") Пароль
+        input#ur_pass(type="password", onchange="user_registry.passwordCheck($(this).val())", tabindex="2", name="pass", placeholder="Password")
+      .field
+        label(for="ur_email") Email
+        input#ur_email(type="email", onchange="user_registry.emailCheck($(this).val())", tabindex="3", name="email", placeholder="salsa@gmail.com")
+      .field.field-right
+        input#ur_submit(type="submit", tabindex="4", value="Зарегистрироваться")
+
+block right_content
+  .userRegistryInfo
+    p Регистрируйся скорей!

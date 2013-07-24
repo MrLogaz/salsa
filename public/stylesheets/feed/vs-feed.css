@@ -1,0 +1,95 @@
+.vs-feed {
+  padding: 10px 0px 10px 0;
+  width: 640px;
+  border-right: 1px solid rgb(255,232,140);
+}
+.feed-row {
+  position: relative;
+  display: inline-block;
+  width: 600px;
+  margin: 0 20px;
+  padding: 20px 0;
+  border-top: 2px solid rgb(255,252,180);
+  border-bottom: 1px solid rgb(255,232,140);
+}
+.feed-row:first-child { border-top: none; }
+.feed-row:last-child { border-bottom: none; }
+
+.feed-row .post-header {
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 10px;
+}
+.feed-row .post-header .post-info {
+  margin: 0 0 0 65px;
+  vertical-align: top;
+}
+.feed-row .post-header .author-name {
+  vertical-align: text-top;
+  margin-top: -3px;
+  display: inline-block;
+  width: 100%;
+}
+.feed-row .post-header .author-name a {
+  display: inline-block;
+  float: left;
+  width: 450px;
+}
+.feed-row .post-header .post-date {
+  float: right;
+  display: inline-block;
+  color: rgb(100,100,100);
+  font-size: 12px;
+}
+.feed-row .post-author {
+  float: left;
+  width: 60px;
+  text-align: center;
+}
+.feed-row .post-author .user-online {
+  color: rgb(100,100,100);
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+.feed-row .post-author-ava {
+  display: inline-block;
+  position: relative;
+}
+.feed-row .post-author-ava .author-ava {
+  width: 50px;
+}
+
+.feed-row .post-title {
+  font-size: 20px;
+  display: inline-block;
+  color: rgb(206,100,0);
+}
+.feed-row .post-anons {
+  margin: 0 0 10px;
+}
+.feed-row .post-preview {
+  text-align: center;
+}
+.feed-row .post-preview img {
+  max-width: 600px;
+  max-height: 350px;
+  border: 1px solid rgb(255,232,140);
+}
+
+.feed-row .event-data {
+  padding: 0 0 0 10px;
+  margin: 10px 0;
+  border-left: 2px solid rgb(255,232,140);
+  color: rgb(206,100,0);
+}
+.feed-row .event-data .key {
+  width: 70px;
+  display: inline-block;
+  font-size: 12px;
+  color: rgb(100,100,100);
+}
+.feed-row .event-data .val {
+  font-size: 14px;
+}

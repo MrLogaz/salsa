@@ -1,0 +1,10 @@
+.top-vs {
+  height: 220px;
+  position: relative;
+  border-bottom: 2px solid rgb(255,252,180);
+}
+#vs-logo {
+  position: absolute;
+  left: 20px;
+  top: 30px;
+}

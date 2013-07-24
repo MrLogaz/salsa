@@ -1,0 +1,13 @@
+/*ur_*/
+
+#userRegistry {
+  display: inline-block;
+  width: 639px;
+  margin: 20px 0;
+  border: 1px solid rgb(255,252,180);
+  border-radius: 4px;
+}
+.ur_step {
+  padding: 20px;
+  box-shadow: 0 0 5px rgb(245,182,61);
+}

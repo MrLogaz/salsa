@@ -1,0 +1,66 @@
+/* profile */
+#profileUser {
+  display: inline-block;
+  width: 100%;
+}
+#profileUser .pu-left {
+  width: 300px;
+  float: left;
+}
+.pu-avatar {
+  text-align: left;
+  margin: 5px 0 10px;
+}
+#profileUser .pu-avatar img {
+  max-width: 280px;
+  border: 1px solid rgb(250,222,140);
+}
+#profileUser .pu-right {
+  margin: 0px 0 0 300px;
+  padding: 0 0 0 20px;
+  border-left: 2px solid #f0f0f0;
+}
+.pu-info {
+  margin: 0 0 30px;
+}
+.pu-names {
+  padding: 0 0 15px;
+  margin: 0 0 10px;
+  border-bottom: 2px solid rgb(255,242,180);
+}
+.pu-full-name {
+  font-size: 32px;
+  color: #222;
+  margin: 0 0 5px;
+}
+.pu-woman,
+.pu-man {
+  height: 35px;
+  display: inline-block;
+  float: left;
+}
+.pu-login {
+  padding: 0 0 0 10px;
+  display: inline-block;
+  line-height: 35px;
+  vertical-align: middle;
+  font-size: 30px;
+  color: #555;
+  color: rgb(225,132,50)
+}
+.pu-city {
+  font-size: 18px;
+  color: #777;
+}
+.pu-about {
+  margin: 5px 0;
+  font-size: 16px;
+}
+.defoult-ava {
+  opacity: 0.1;
+}
+
+#profileUser .feed-row {
+  margin-left: 0;
+}
+

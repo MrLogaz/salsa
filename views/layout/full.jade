@@ -1,0 +1,18 @@
+!!! 5
+html
+  head
+    title= head.title
+    meta(name="description", content=head.desc)
+    link(rel="shortcut icon", href="/images/favicon.ico", type="image/x-icon")
+    link(rel='stylesheet', href='/style.css')
+    script(rel='javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
+    script(rel='javascript', src='/scripts.js')
+    
+  body
+    .page-wraper
+      include ../top-panel/container
+      .page-container
+        .content-wrap
+          block content
+    #js-blocks
+      #popup-input

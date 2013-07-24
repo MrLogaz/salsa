@@ -1,0 +1,17 @@
+.widget {
+  width: 280px;
+  margin: 20px;
+  border-bottom: 1px solid rgb(255,232,140);
+}
+.w-header {
+  padding: 10px 0 5px;
+  margin: 0 10px;
+  font-size: 18px;
+  color: rgb(206,100,0);
+}
+.w-header a {
+  color: rgb(206,100,0);
+}
+.w-body {
+  padding: 5px 10px 10px;
+}

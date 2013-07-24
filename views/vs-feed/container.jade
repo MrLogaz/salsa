@@ -1,0 +1,54 @@
+mixin article(feed)
+  include article
+mixin event(feed)
+  include event
+mixin nabor(feed)
+  include nabor
+
+
+block left_content
+  .vs-feed
+    for feed in feeds
+      case feed.author.type
+        when 'u'
+          - var userHref = "user"
+        when 's'
+          - var userHref = "school"
+        when 'c'
+          - var userHref = "club"
+
+      article.feed-row
+        .post-header
+          .post-author
+            a.post-author-ava(href="/" + userHref + "/" + feed.author.login)
+              img.author-ava(src="/files/" + userHref + "/" + feed.author.login + "/ava-60.jpg")
+            if feed.author.type == 'u'
+              span.user-online= "online"
+
+
+          .post-info
+            .author-name
+              if feed.author.type == 'u'
+                a(href="/user/" + feed.author.login)= feed.author.fname + ' ' + feed.author.sname
+              else
+                a(href="/" + userHref + "/" + feed.author.login)= feed.author.name
+              .post-date= feed.date.d + '.' + feed.date.m + '.' + feed.date.y
+            a.post-title(href="/blog/" + feed.id)= feed.title
+          
+        case feed.type
+          when 'a'
+            mixin article(feed)
+          when 'e'
+            mixin event(feed)
+          when 'n'
+            mixin nabor(feed)
+          default
+            span ЧТО ЭТО?
+
+        
+    else
+      span Новостей нет
+
+
+block right_content
+  p Правая колонка

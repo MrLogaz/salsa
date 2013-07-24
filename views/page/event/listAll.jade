@@ -1,0 +1,49 @@
+extends ../../layout/home
+  
+block left_content
+
+  if posts.length
+    .vs-feed
+      - each post in posts
+        article.feed-row
+          .post-header
+            .post-author
+              if post.authorAvatar
+              a.post-author-ava(href="/" + post.behalf + "/" + post.authorLogin)
+                img.author-ava(src="/files/" + post.behalf + "/" + post.authorLogin + "/ava-60.jpg")
+
+            .post-info
+              .author-name
+                a(href="/user/" + post.authorLogin)= post.authorFname + ' ' + post.authorSname
+                .post-date= post.date.getDay() + '.' + post.date.getMonth() + '.' + post.date.getFullYear()
+              a.post-title(href="/event/" + post.latUrl)= post.title
+
+          .post-anons= post.anons
+          .post-event
+            .event-data
+              .adress
+                span.key Адрес:
+                span.val= post.address
+              //- .dateFrom
+              //-   span.key Начало:
+              //-   span.val= post.data.dateFrom.d + '.' + post.data.dateFrom.m + '.' + post.data.dateFrom.y + ' в ' + post.data.dateFrom.H + ':' + post.data.dateFrom.M
+              //- .dateTo
+              //-   span.key Конец:
+              //-   span.val= post.data.dateTo.d + '.' + post.data.dateTo.m + '.' + post.data.dateTo.y + ' в ' + post.data.dateTo.H + ':' + post.data.dateTo.M
+              .price
+                span.key Цена:
+                span.val= post.price
+              //- .tel
+              //-   span.key Телефон:
+              //-   span.val= post.data.tel
+            if post.preview
+              .post-preview
+                img(src="/files/post/p" + post.id + "/prew.jpg")
+
+
+  else
+    p Событий нет
+
+
+block right_content
+  p Правая колонка

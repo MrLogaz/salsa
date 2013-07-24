@@ -1,0 +1,14 @@
+extends ../../layout/full
+
+
+block content
+  #userLoginPage
+    form.form(method="post", action="/login")
+      .field
+        label(for="#user-auth_login") Логин
+        input#user-auth_login(type="text", tabindex="1", name="login")
+      .field
+        label(for="#user-auth_pass") Пароль
+        input#user-auth_pass(type="text", tabindex="2", name="pass")
+      .field.field-right
+        input(type="submit", tabindex="3", value="Войти")

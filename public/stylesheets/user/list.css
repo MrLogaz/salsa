@@ -1,0 +1,58 @@
+/*user-list*/
+.user-list_item {
+  display: inline-block;
+  width: 280px;
+  vertical-align: top;
+  padding: 10px;
+  margin: 0 15px 15px 0;
+  border: 1px solid rgb(255,202,130);
+  border-radius: 4px;
+  background-color: rgb(255,252,200);
+  text-decoration: none;
+  min-height: 55px;
+}
+.user-list_item:hover {
+  text-decoration: none;
+}
+.uli_avatar {
+  float: left;
+  width: 60px;
+  text-align: center;
+}
+.uli_avatar img {
+  border: 1px solid rgb(255,222,150);
+  box-shadow: 0 0 5px rgb(255,222,150);
+}
+.uli_avatar-def img {
+  border: none;
+  box-shadow: none;
+}
+.uli_info {
+  margin: 0 0 0 70px;
+  vertical-align: top;
+}
+.uli_fname {
+  vertical-align: text-top;
+  margin-top: -3px;
+  white-space: nowrap;
+  width: 210px;
+  overflow: hidden;
+  font-size: 16px;
+  color: #000;
+}
+.uli_sname {
+  white-space: nowrap;
+  margin-top: -4px;
+  width: 210px;
+  overflow: hidden;
+  font-size: 14px;
+  color: #333;
+}
+.uli_name:hover {
+  overflow: visible;
+}
+.uli_city {
+  color: #444;
+  font-size: 10px;
+  margin-top: 5px;
+}

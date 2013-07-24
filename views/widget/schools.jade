@@ -1,0 +1,7 @@
+.w-schools.widget
+  .w-header 
+    a(href="/schools") Школы
+  .w-body
+    for school in w_schools
+      a.w-item-link(href="/school/" + school.login, title=school.name)
+        img.w-item-img(src="/files/school/s" + school.id + "/ava_50.jpg")

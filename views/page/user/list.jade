@@ -1,0 +1,20 @@
+extends ../../layout/home
+
+block left_content
+  .title1= head.title
+  .user-list
+    - each user in users
+      a(href="/user/" + user.login).user-list_item
+        .uli_avatar
+          if(user.avatar)
+            img(src="/files/user/" + user.login + "/ava-60.jpg", width='50')
+          else 
+            .uli_avatar-def
+              if(user.sex == 'man')
+                img(src="/images/vs_boy_70.png", height='52')
+              if(user.sex == 'woman')
+                img(src="/images/vs_girl_62.png", height='52')
+        .uli_info
+          .uli_fname= user.fname
+          .uli_sname= user.sname
+          .uli_city= user.city

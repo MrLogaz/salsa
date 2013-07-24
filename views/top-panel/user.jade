@@ -1,0 +1,20 @@
+#user-create-post.block
+  a(href="/events/create")
+    .ava
+      img(src="/images/top-panel_add.png", width="23px")
+#user-notice.block
+  span.num 2
+
+a.user-link.block(href="/user/" + user.login)
+  if user.fname
+    span.name= user.fname
+  else
+    span.name= user.login
+  if user.avatar
+    .ava
+      img(src="/files/user/" + user.login + "/ava-60.jpg")
+if user.school
+  a.user-school.block(href="/school/s" + user.school)
+    .ava
+      img(src="/files/school/s" + user.school + "/ava_30.jpg")
+a.block.user-out(href="/logout", title="Выйти") Выйти

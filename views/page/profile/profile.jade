@@ -1,0 +1,35 @@
+extends ../../layout/full
+
+
+block content
+  #profileUser
+    .pu-panel
+      .pu-left
+        .pu-avatar
+          if(profile.avatar)
+            img(src="/files/user/" + profile.login + "/ava-orig.jpg")
+          else
+            img.defoult-ava(src="/images/logo_150px.png")
+
+        .pu-function
+          a(href="/user/" + profile.login + "/settings") Настройки
+          //- p= data.region
+          p Добавить в друзья
+          p Добавить в друзья
+      .pu-right  
+        .pu-info
+          .pu-names
+            .pu-full-name.comfortaa-font= profile.sname + ' ' + profile.fname + ' ' + profile.tname
+            if(profile.sex == 'man')
+              img.pu-man(src="/images/vs_boy_70.png")
+            if(profile.sex == 'woman')
+              img.pu-woman(src="/images/vs_girl_62.png")
+            .pu-login.comfortaa-font= profile.login
+          .pu-city= profile.country + ' ' + profile.city
+          .pu-about= profile.about
+
+        .title1 Стена
+        .pu-wall
+          .feed-row Я пойду на фестиваль
+          .feed-row Открытый урок по пачанге!
+

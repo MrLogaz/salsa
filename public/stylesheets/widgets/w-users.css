@@ -1,0 +1,9 @@
+/*.w-users*/
+.w-users .w-item-link {
+  margin: 0 13px 8px 0;
+  display: inline-block;
+}
+.w-users .w-item-img {
+  max-width: 30px;
+  max-height: 30px;
+}

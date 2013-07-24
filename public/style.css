@@ -1,0 +1,788 @@
+@import url(http://fonts.googleapis.com/css?family=Comfortaa:400,700,300&subset=latin,cyrillic);
+/*font-family: 'Comfortaa', cursive;*/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,cyrillic);
+/*font-family: 'Open Sans', sans-serif;*/
+body {
+  font: 14px 'Comfortaa', cursive;
+  background: rgba(255,255,255,1);
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: rgb(43,88,122);
+  text-decoration: none;
+  -webkit-transition: color 200ms;
+  -moz-transition: color 200ms;
+  -o-transition: color 200ms;
+  -ms-transition: color 200ms;
+  transition: color 200ms;
+}
+a:hover {
+  color: rgb(63,108,182);
+  text-decoration: underline;
+}
+.comfortaa-font {
+  font-family: 'Comfortaa', cursive;
+}
+.open-sans-font {
+  font-family: 'Open Sans', sans-serif;
+}
+.content-wrap {
+  width: 992px;
+  position: relative;
+  display: block;
+  margin: 0 auto; 
+}
+.page-container {
+  border-top: 2px solid rgb(255,232,140);
+  font-family: 'Open Sans', sans-serif;
+  padding: 15px 0;
+}
+
+.left-page-block {
+  float: left;
+  width: 641px;
+}
+.right-page-block {
+  width: 341px;
+  float: right;
+}
+.title1 {
+  margin: 0 0 20px;
+  font-size: 24px;
+  color: rgb(206,100,0);
+}
+.form .field {
+  margin: 0 0 10px;
+  display: inline-block;
+  width: 100%;
+}
+.field-right {
+  text-align: right;
+}
+.form .field label {
+  width: 200px;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 30px;
+  vertical-align: top;
+}
+.form .field input[type="text"],
+.form .field input[type="email"],
+.form .field input[type="password"],
+.form .field textarea {
+  position: relative;
+  background: rgb(255,255,255);
+  padding: 2px 10px;
+  height: 30px;
+  width: 365px;
+  border: 1px solid rgb(245,182,61);
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 30px;
+  vertical-align: middle;
+}
+.form .field input:focus,
+.form .field textarea:focus {
+  box-shadow: 0 0 8px rgb(235,172,61);
+  outline: none;
+}
+.form .field textarea {
+  height: 100px;
+  resize: none;
+  line-height: 25px;
+}
+.form .field input[type="submit"] {
+  margin: 20px 13px 0 0px;
+  line-height: 30px;
+  padding: 0;
+  border: 1px solid rgb(240,180,65);
+  border-radius: 3px;
+  font: 18px 'Comfortaa', cursive;
+  box-shadow: 1px 1px 4px #ddd;
+  background: rgb(255,202,81);
+  height: 40px;
+  width: 385px;
+  cursor: pointer;
+}
+.form .field input[type="submit"]:hover,
+.form .field input[type="submit"]:focus {
+  background: rgb(255,212,91);
+  box-shadow: 0px 0px 4px rgb(235,192,81);
+}
+
+.form .field .radio {
+  display: inline-block;
+}
+.form .field .radio label {
+  width: 171px;
+  position: relative;
+  text-align: center;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 3px 10px;
+  background: rgb(255,212,91);
+  border: 1px solid rgb(235,192,81);
+  cursor: pointer;
+  color: #777;
+  box-shadow: 0px 0px 4px rgb(235,192,81);
+}
+.form .field .radio label:hover {
+  background: rgb(255,222,121);
+}
+
+.form .field .radio .first-label {
+  border-radius: 10px 0 0 10px;
+}
+.form .field .radio .last-label {
+  border-radius: 0px 10px 10px 0px;
+}
+.form .field .radio input[type="radio"] {
+  display: none;
+}
+.form .field .radio input[type="radio"]:checked + label {
+  /*background: rgb(255,150,50);*/
+  background: rgba(255,150,50,0.8);
+  box-shadow: none;
+  color: #000;
+}
+
+
+.input-good {
+  border-color: rgb(50,200,50) !important;
+  background-color: rgba(50,200,50,0.1) !important;
+}
+.input-fail {
+  background-color: rgba(200,50,50,0.1) !important;
+  border-color: rgb(200,50,50) !important;
+}
+
+
+#popup-input {
+  position: absolute;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  padding: 3px 10px;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+}
+#popup-input.pi_show {
+  opacity: 1;
+}
+#vs-header {
+  width: 100%;
+}
+
+#top-panel {
+  height: 40px;
+  /*position: fixed;*/
+  width: 100%;
+  z-index: 100;
+  border-bottom: 2px solid rgb(255,222,81);
+  background: rgb(255,218,71);
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZGE0NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmU4OGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-linear-gradient(top,  rgb(255,218,71) 0%, rgb(255,232,140) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,218,71)), color-stop(100%,rgb(255,232,140)));
+  background: -webkit-linear-gradient(top,  rgb(255,218,71) 0%,rgb(255,232,140) 100%);
+  background: -o-linear-gradient(top,  rgb(255,218,71) 0%,rgb(255,232,140) 100%);
+  background: -ms-linear-gradient(top,  rgb(255,218,71) 0%,rgb(255,232,140) 100%);
+  background: linear-gradient(to bottom,  rgb(255,218,71) 0%,rgb(255,232,140) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffda47', endColorstr='#ffe88c',GradientType=0 );  
+}
+#top-panel .panel-menu {
+  display: inline-block;
+  float: left;
+}
+#top-panel .panel-menu a {
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  height: 40px;
+  vertical-align: middle;
+  line-height: 40px;
+  text-decoration: none;
+  color: #333;
+  padding: 0 15px;
+}
+#top-panel .panel-menu a:hover {
+  background: rgb(255,222,81);
+}
+
+#vs-panel-user {
+  float: right;
+  height: 40px;
+  vertical-align: middle;
+  line-height: 40px;
+}
+#vs-panel-user a {
+  text-decoration: none;
+}
+#vs-panel-user .block {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 10px;
+  cursor: pointer;
+}
+#vs-panel-user .block:hover,
+#vs-panel-user .block.active {
+  background: rgb(255,202,80);
+}
+
+#vs-panel-user .ava {
+  display: inline-block;
+  float: right;
+  margin: 3px 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid rgb(255,242,160);
+}
+#vs-panel-user .ava img {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+#vs-panel-user .name {
+  color: #000;
+  margin: 0 10px 0 0;
+}
+#user-notice .num {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #c44;
+  padding: 5px 10px;
+  background: rgb(255,242,160);
+  border-radius: 5px;
+  border: 1px solid rgb(255,242,200);
+}
+#user-notice {
+
+}
+
+#user-auth {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  width: 300px;
+  z-index: 9999;
+  opacity: 0;
+  height: 0;
+  padding: 10px 20px;
+  background: rgb(255,242,160);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  transition: opacity 300ms, height 200ms;
+  -webkit-transition: opacity 300ms, height 200ms;
+}
+#user-auth.user-auth_show {
+  opacity: 1;
+  height: 130px;
+}
+#user-auth input[type="text"] {
+  width: 190px;
+  height: 25px;
+}
+#user-auth label {
+  width: 80px;
+  font-size: 16px;
+}
+#user-auth_submit {
+  width: 209px;
+  height: 25px;
+  font-size: 15px;
+  float: right;
+  margin: 0 10px;
+  background: rgb(255,222,121);
+}
+
+#vs-panel-user .user-reg,
+#vs-panel-user .user-auth {
+  color: #000;
+}
+#vs-panel-user .user-out {
+  
+}
+#user-create-post .ava {
+  border: none;
+  padding: 5px 0 1px;
+  margin: 2px 0;
+  line-height: normal;
+}
+#user-create-post .ava img {
+  width: 25px;
+  height: 25px;
+}
+.vs-feed {
+  padding: 10px 0px 10px 0;
+  width: 640px;
+  border-right: 1px solid rgb(255,232,140);
+}
+.feed-row {
+  position: relative;
+  display: inline-block;
+  width: 600px;
+  margin: 0 20px;
+  padding: 20px 0;
+  border-top: 2px solid rgb(255,252,180);
+  border-bottom: 1px solid rgb(255,232,140);
+}
+.feed-row:first-child { border-top: none; }
+.feed-row:last-child { border-bottom: none; }
+
+.feed-row .post-header {
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 10px;
+}
+.feed-row .post-header .post-info {
+  margin: 0 0 0 65px;
+  vertical-align: top;
+}
+.feed-row .post-header .author-name {
+  vertical-align: text-top;
+  margin-top: -3px;
+  display: inline-block;
+  width: 100%;
+}
+.feed-row .post-header .author-name a {
+  display: inline-block;
+  float: left;
+  width: 450px;
+}
+.feed-row .post-header .post-date {
+  float: right;
+  display: inline-block;
+  color: rgb(100,100,100);
+  font-size: 12px;
+}
+.feed-row .post-author {
+  float: left;
+  width: 60px;
+  text-align: center;
+}
+.feed-row .post-author .user-online {
+  color: rgb(100,100,100);
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+.feed-row .post-author-ava {
+  display: inline-block;
+  position: relative;
+}
+.feed-row .post-author-ava .author-ava {
+  width: 50px;
+}
+
+.feed-row .post-title {
+  font-size: 20px;
+  display: inline-block;
+  color: rgb(206,100,0);
+}
+.feed-row .post-anons {
+  margin: 0 0 10px;
+}
+.feed-row .post-preview {
+  text-align: center;
+}
+.feed-row .post-preview img {
+  max-width: 600px;
+  max-height: 350px;
+  border: 1px solid rgb(255,232,140);
+}
+
+.feed-row .event-data {
+  padding: 0 0 0 10px;
+  margin: 10px 0;
+  border-left: 2px solid rgb(255,232,140);
+  color: rgb(206,100,0);
+}
+.feed-row .event-data .key {
+  width: 70px;
+  display: inline-block;
+  font-size: 12px;
+  color: rgb(100,100,100);
+}
+.feed-row .event-data .val {
+  font-size: 14px;
+}
+/* jquery.Jcrop.css v0.9.12 - MIT License */
+/*
+  The outer-most container in a typical Jcrop instance
+  If you are having difficulty with formatting related to styles
+  on a parent element, place any fixes here or in a like selector
+
+  You can also style this element if you want to add a border, etc
+  A better method for styling can be seen below with .jcrop-light
+  (Add a class to the holder and style elements for that extended class)
+*/
+.jcrop-holder {
+  direction: ltr;
+  text-align: left;
+  /* IE10 touch compatibility */
+  -ms-touch-action: none;
+}
+/* Selection Border */
+.jcrop-vline,
+.jcrop-hline {
+  background: #ffffff url("Jcrop.gif");
+  font-size: 0;
+  position: absolute;
+}
+.jcrop-vline {
+  height: 100%;
+  width: 1px !important;
+}
+.jcrop-vline.right {
+  right: 0;
+}
+.jcrop-hline {
+  height: 1px !important;
+  width: 100%;
+}
+.jcrop-hline.bottom {
+  bottom: 0;
+}
+/* Invisible click targets */
+.jcrop-tracker {
+  height: 100%;
+  width: 100%;
+  /* "turn off" link highlight */
+  -webkit-tap-highlight-color: transparent;
+  /* disable callout, image save panel */
+  -webkit-touch-callout: none;
+  /* disable cut copy paste */
+  -webkit-user-select: none;
+}
+/* Selection Handles */
+.jcrop-handle {
+  background-color: #333333;
+  border: 1px #eeeeee solid;
+  width: 7px;
+  height: 7px;
+  font-size: 1px;
+}
+.jcrop-handle.ord-n {
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -4px;
+  top: 0;
+}
+.jcrop-handle.ord-s {
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -4px;
+  margin-left: -4px;
+}
+.jcrop-handle.ord-e {
+  margin-right: -4px;
+  margin-top: -4px;
+  right: 0;
+  top: 50%;
+}
+.jcrop-handle.ord-w {
+  left: 0;
+  margin-left: -4px;
+  margin-top: -4px;
+  top: 50%;
+}
+.jcrop-handle.ord-nw {
+  left: 0;
+  margin-left: -4px;
+  margin-top: -4px;
+  top: 0;
+}
+.jcrop-handle.ord-ne {
+  margin-right: -4px;
+  margin-top: -4px;
+  right: 0;
+  top: 0;
+}
+.jcrop-handle.ord-se {
+  bottom: 0;
+  margin-bottom: -4px;
+  margin-right: -4px;
+  right: 0;
+}
+.jcrop-handle.ord-sw {
+  bottom: 0;
+  left: 0;
+  margin-bottom: -4px;
+  margin-left: -4px;
+}
+/* Dragbars */
+.jcrop-dragbar.ord-n,
+.jcrop-dragbar.ord-s {
+  height: 7px;
+  width: 100%;
+}
+.jcrop-dragbar.ord-e,
+.jcrop-dragbar.ord-w {
+  height: 100%;
+  width: 7px;
+}
+.jcrop-dragbar.ord-n {
+  margin-top: -4px;
+}
+.jcrop-dragbar.ord-s {
+  bottom: 0;
+  margin-bottom: -4px;
+}
+.jcrop-dragbar.ord-e {
+  margin-right: -4px;
+  right: 0;
+}
+.jcrop-dragbar.ord-w {
+  margin-left: -4px;
+}
+/* The "jcrop-light" class/extension */
+.jcrop-light .jcrop-vline,
+.jcrop-light .jcrop-hline {
+  background: #ffffff;
+  filter: alpha(opacity=70) !important;
+  opacity: .70!important;
+}
+.jcrop-light .jcrop-handle {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #000000;
+  border-color: #ffffff;
+  border-radius: 3px;
+}
+/* The "jcrop-dark" class/extension */
+.jcrop-dark .jcrop-vline,
+.jcrop-dark .jcrop-hline {
+  background: #000000;
+  filter: alpha(opacity=70) !important;
+  opacity: 0.7 !important;
+}
+.jcrop-dark .jcrop-handle {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #ffffff;
+  border-color: #000000;
+  border-radius: 3px;
+}
+/* Simple macro to turn off the antlines */
+.solid-line .jcrop-vline,
+.solid-line .jcrop-hline {
+  background: #ffffff;
+}
+/* Fix for twitter bootstrap et al. */
+.jcrop-holder img,
+img.jcrop-preview {
+  max-width: none;
+}
+/* profile */
+#profileUser {
+  display: inline-block;
+  width: 100%;
+}
+#profileUser .pu-left {
+  width: 300px;
+  float: left;
+}
+.pu-avatar {
+  text-align: left;
+  margin: 5px 0 10px;
+}
+#profileUser .pu-avatar img {
+  max-width: 280px;
+  border: 1px solid rgb(250,222,140);
+}
+#profileUser .pu-right {
+  margin: 0px 0 0 300px;
+  padding: 0 0 0 20px;
+  border-left: 2px solid #f0f0f0;
+}
+.pu-info {
+  margin: 0 0 30px;
+}
+.pu-names {
+  padding: 0 0 15px;
+  margin: 0 0 10px;
+  border-bottom: 2px solid rgb(255,242,180);
+}
+.pu-full-name {
+  font-size: 32px;
+  color: #222;
+  margin: 0 0 5px;
+}
+.pu-woman,
+.pu-man {
+  height: 35px;
+  display: inline-block;
+  float: left;
+}
+.pu-login {
+  padding: 0 0 0 10px;
+  display: inline-block;
+  line-height: 35px;
+  vertical-align: middle;
+  font-size: 30px;
+  color: #555;
+  color: rgb(225,132,50)
+}
+.pu-city {
+  font-size: 18px;
+  color: #777;
+}
+.pu-about {
+  margin: 5px 0;
+  font-size: 16px;
+}
+.defoult-ava {
+  opacity: 0.1;
+}
+
+#profileUser .feed-row {
+  margin-left: 0;
+}
+
+
+#userSettings .first-label .ur_img-dancer {
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+  height: 44px;
+  opacity: 0;
+}
+#userSettings .last-label .ur_img-dancer {
+  position: absolute;
+  left: -4px;
+  bottom: 0;
+  height: 45px;
+  opacity: 0;
+}
+#userSettings input[type="radio"]:checked + label img {
+  opacity: 1;
+}
+.top-vs {
+  height: 220px;
+  position: relative;
+  border-bottom: 2px solid rgb(255,252,180);
+}
+#vs-logo {
+  position: absolute;
+  left: 20px;
+  top: 30px;
+}
+#userLoginPage {
+  margin: 20px auto;
+  width: 550px;
+}
+#userLoginPage input[type="submit"] {
+  margin: 20px 26px 0 0px;
+}
+/*user-list*/
+.user-list_item {
+  display: inline-block;
+  width: 280px;
+  vertical-align: top;
+  padding: 10px;
+  margin: 0 15px 15px 0;
+  border: 1px solid rgb(255,202,130);
+  border-radius: 4px;
+  background-color: rgb(255,252,200);
+  text-decoration: none;
+  min-height: 55px;
+}
+.user-list_item:hover {
+  text-decoration: none;
+}
+.uli_avatar {
+  float: left;
+  width: 60px;
+  text-align: center;
+}
+.uli_avatar img {
+  border: 1px solid rgb(255,222,150);
+  box-shadow: 0 0 5px rgb(255,222,150);
+}
+.uli_avatar-def img {
+  border: none;
+  box-shadow: none;
+}
+.uli_info {
+  margin: 0 0 0 70px;
+  vertical-align: top;
+}
+.uli_fname {
+  vertical-align: text-top;
+  margin-top: -3px;
+  white-space: nowrap;
+  width: 210px;
+  overflow: hidden;
+  font-size: 16px;
+  color: #000;
+}
+.uli_sname {
+  white-space: nowrap;
+  margin-top: -4px;
+  width: 210px;
+  overflow: hidden;
+  font-size: 14px;
+  color: #333;
+}
+.uli_name:hover {
+  overflow: visible;
+}
+.uli_city {
+  color: #444;
+  font-size: 10px;
+  margin-top: 5px;
+}
+/*ur_*/
+
+#userRegistry {
+  display: inline-block;
+  width: 639px;
+  margin: 20px 0;
+  border: 1px solid rgb(255,252,180);
+  border-radius: 4px;
+}
+.ur_step {
+  padding: 20px;
+  box-shadow: 0 0 5px rgb(245,182,61);
+}
+
+/*.w-schools*/
+.w-schools .w-item-link {
+  margin: 0 15px 10px 0;
+  display: inline-block;
+}
+.w-schools .w-item-img {
+  width: 50px;
+  height: 50px;
+}
+/*.w-users*/
+.w-users .w-item-link {
+  margin: 0 13px 8px 0;
+  display: inline-block;
+}
+.w-users .w-item-img {
+  max-width: 30px;
+  max-height: 30px;
+}
+.widget {
+  width: 280px;
+  margin: 20px;
+  border-bottom: 1px solid rgb(255,232,140);
+}
+.w-header {
+  padding: 10px 0 5px;
+  margin: 0 10px;
+  font-size: 18px;
+  color: rgb(206,100,0);
+}
+.w-header a {
+  color: rgb(206,100,0);
+}
+.w-body {
+  padding: 5px 10px 10px;
+}
