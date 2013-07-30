@@ -1,0 +1,19 @@
+if pagination.count > pagination.limit
+  .pagination_wrap
+    .pagination_body
+      a.pagination_item.pagination_begin(href="/" + pagination.link) В начало
+      -var count = Math.ceil(pagination.count/pagination.limit)
+      
+      if pagination.current > 5
+        -var curPage = pagination.current - 4
+        -var maxPage = pagination.current + 5
+      else
+        -var curPage = 1
+        -var maxPage = pagination.current + 5
+      -for(i=curPage; count>=i && i<maxPage;i++)
+        if (pagination.current == i)
+          span.pagination_item.pagination_current= i
+        else  
+          a.pagination_item(href="/" + pagination.link + "?p=" + i)= i
+
+      a.pagination_item.pagination_end(href="/" + pagination.link + "?p=" + count) В конец

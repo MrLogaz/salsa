@@ -102,16 +102,3 @@
   background-color: rgba(200,50,50,0.1) !important;
   border-color: rgb(200,50,50) !important;
 }
-
-
-#popup-input {
-  position: absolute;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  padding: 3px 10px;
-  opacity: 0;
-  -webkit-transition: opacity 0.4s ease;
-}
-#popup-input.pi_show {
-  opacity: 1;
-}

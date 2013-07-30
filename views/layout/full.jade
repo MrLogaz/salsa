@@ -6,9 +6,9 @@ html
     link(rel="shortcut icon", href="/images/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/style.css')
     script(rel='javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
-    script(rel='javascript', src='/scripts.js')
     
-  body
+    
+  body(onload="init.common();")
     .page-wraper
       include ../top-panel/container
       .page-container
@@ -16,3 +16,6 @@ html
           block content
     #js-blocks
       #popup-input
+
+    block popupInfo
+    script(rel='javascript', src='/scripts.js')

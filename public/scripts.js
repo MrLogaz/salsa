@@ -1,3 +1,89 @@
+var cropAvatar = {
+  upload_ava: function(){
+    $("#form_avatar-preview-block").html('<img id="form_avatar-preview" />');
+    cropAvatar.updateCoords({x:0,y:0,w:0,h:0});
+    var uploadFile = $('#form_avatar')[0].files[0];
+    var imgFilter = /^(image\/jpeg|image\/jpg|image\/png)$/i;
+    if (! imgFilter.test(uploadFile.type)) {
+      popup.popupInput('form_avatar', 'Изображение должно иметь расширение <b>jpeg, jpg</b> или <b>png</b>');
+      return false;
+    }
+
+    var preview = document.getElementById('form_avatar-preview');
+    var Reader = new FileReader();
+    Reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.onload = function() { // onload event handler
+        var imageSize = {w: preview.width, h: preview.height};
+        var scaleImage = 600/imageSize.w;
+        if(imageSize.h*scaleImage> 400){
+          scaleImage = 400/imageSize.h;
+          preview.height = 400;
+          preview.width = imageSize.w*scaleImage;
+        }else{
+          preview.width = 600;
+        }
+        $('#form_avatar-scale').val(scaleImage);
+        $('#popupInfo_apply').show();
+
+
+        var jcrop_api, boundx, boundy;
+
+        // destroy Jcrop if it is existed
+        if (typeof jcrop_api != 'undefined')
+            jcrop_api.destroy();
+
+        // initialize Jcrop
+        function cropJcrop(){
+          $('#form_avatar-preview').Jcrop({
+            aspectRatio: 1,
+            setSelect: [0, 0, 250, 250],
+            minSize: [100, 100],
+            onSelect: cropAvatar.updateCoords,
+            onRelease: cropJcrop
+          });
+        }
+        cropJcrop();
+      };
+    };
+    Reader.readAsDataURL(uploadFile);
+  },
+  updateCoords: function(c){
+    var imageScale = $('#form_avatar-scale').val();
+    $('#form_avatarPx').val(Math.round(c.x/imageScale));
+    $('#form_avatarPy').val(Math.round(c.y/imageScale));
+    $('#form_avatarPw').val(Math.round(c.w/imageScale));
+    $('#form_avatarPh').val(Math.round(c.h/imageScale));
+  },
+  cropSave: function(){
+    popup.popupInfoClose();
+    return false;
+  },
+  cropCancel: function(){
+    $('#popupInfo_apply').hide();
+    $("#form_avatar").replaceWith($("#form_avatar").clone());
+    $("#form_avatar-preview-block").html('<img id="form_avatar-preview" />');
+    cropAvatar.updateCoords({x:0,y:0,w:0,h:0});
+    popup.popupInfoClose(); 
+  }
+};
+var curDate = new Date();
+var date = {
+	monthToStr: function(){
+		var months = new Array("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря");
+		$('.date-month').each(function(){
+			$(this).html(months[$(this).data('value')]);
+		});
+	},
+	clearCurrentYear: function(){
+		var currentYear = curDate.getFullYear();
+		$('.date-year').each(function(){
+			if($(this).data('value') == currentYear){
+				$(this).hide();
+			}
+		});
+	}
+};
 var validTitle = false;
 var event_create = {
 	titleCheck: function(title){
@@ -24,6 +110,36 @@ var event_create = {
       });
     }
   },
+};
+var image = {
+	showPreview: function(previewId, fileId){
+		var preview = document.getElementById(previewId);
+		var file = $('#'+fileId)[0].files[0];
+		popup.popupInputHide();
+		var imgFilter = /^(image\/jpeg|image\/jpg|image\/png)$/i;
+    if (! imgFilter.test(file.type)) {
+      popup.popupInput(fileId, 'Изображение должно иметь расширение <b>jpeg, jpg</b> или <b>png</b>');
+      previewClone = $("#"+previewId).prop('src', '').clone()
+      $("#"+fileId).replaceWith($("#"+fileId).clone());
+      $("#"+previewId).replaceWith(previewClone);
+      return false;
+    }
+		var Reader = new FileReader();
+    Reader.onload = function(e) {
+      preview.src = e.target.result;
+  	};
+  	Reader.readAsDataURL(file);
+	}
+};
+var html = document.documentElement;
+var body = document.body;
+
+var init = {
+	common: function(){
+		date.monthToStr();
+		date.clearCurrentYear();
+		popup.blanket_size();
+	}
 };
 /**
  * jquery.Jcrop.min.js v0.9.12 (build:20130202)
@@ -59,6 +175,73 @@ var popup = {
   },
   popupInputHide: function(){
   	$("#popup-input").removeClass("pi_show");
+  },
+  popupInfoShow: function(windowname, popupWidth, popupHeight){
+    blanket_size(windowname);
+    window_pos(windowname, popupWidth, popupHeight);
+    popup.show('blanket');
+    popup.show(windowname);
+    return false;
+  },
+  popupInfoShow: function(popupWidth, popupHeight){
+    popup.popupInfo_pos(popupWidth, popupHeight);
+    var blanket = document.getElementById('blanket');
+    var popupInfo = document.getElementById('popupInfo');
+    blanket.style.display = 'block';
+    popupInfo.style.display = 'block';
+    return false;
+  },
+  popupInfoClose: function(){
+    var blanket = document.getElementById('blanket');
+    var popupInfo = document.getElementById('popupInfo');
+    blanket.style.display = 'none';
+    popupInfo.style.display = 'none';
+    return false;
+  },
+
+  blanket_size: function(){
+    var blanket = document.getElementById('blanket');
+    if(typeof window.innerWidth != 'undefined'){
+      viewportheight = window.innerHeight;
+    }else{
+      viewportheight = document.documentElement.clientHeight;
+    }
+    if((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+      blanket_height = viewportheight;
+    }else{
+      if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+        blanket_height = document.body.parentNode.clientHeight;
+      } else {
+        blanket_height = document.body.parentNode.scrollHeight;
+      }
+    }
+    
+    blanket.style.height = blanket_height + 'px';
+  },
+  popupInfo_pos: function(popupWidth, popupHeight) {
+    if (typeof window.innerWidth != 'undefined')
+      viewportwidth = window.innerHeight;
+    else
+      viewportwidth = document.documentElement.clientHeight;
+    if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth))
+      window_width = viewportwidth;
+    else {
+      if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth)
+        window_width = document.body.parentNode.clientWidth;
+      else
+        window_width = document.body.parentNode.scrollWidth;
+    }
+    var popUpDiv = document.getElementById('popupInfo');
+    window_width=window_width/2-(popupWidth/2);
+    popUpDiv.style.left = window_width + 'px';
+    popUpDiv.style.width = popupWidth + 'px';
+
+    var scrollTop = html.scrollTop || body && body.scrollTop || 0;
+    scrollTop -= html.clientTop; // IE<8
+    popUpDiv.style.top = scrollTop + 100 + 'px';
+
+    if(popupHeight)
+      popUpDiv.style.height = popupHeight + 'px';
   }
 };
 var user_auth = {
@@ -80,27 +263,34 @@ var user_auth = {
 var validLogin = false;
 var user_registry = {
   loginCheck: function(login){
-    if(login.length<3){
-      $('#ur_login').addClass('input-fail').removeClass('input-good');
-      popup.popupInput('ur_login', 'Логин должен быть не менее 3 символов');
+    var lReg = /^[a-z][a-z0-9]*([-_][a-z0-9]+){0,2}$/i;
+    if(!lReg.test(login)){
       validLogin = false;
-    }else{
-      $.ajax({
-        type: "Post",
-        url: "/user/loginCheck",
-        data: {loginCheck: login},
-        success: function(res){
-          if(res){
-            $('#ur_login').addClass('input-good').removeClass('input-fail');
-            popup.popupInput('ur_login', 'Логин свободен');
-            validLogin = true;
-          }else{
-            $('#ur_login').addClass('input-fail').removeClass('input-good');
-            popup.popupInput('ur_login', 'Логин занят');
-            validLogin = false;
+      $('#ur_login').addClass('input-fail').removeClass('input-good');
+      popup.popupInput('ur_login', 'Логин должен содержать только латинские симолы и цифры');
+    }else {
+      if(login.length<3){
+        $('#ur_login').addClass('input-fail').removeClass('input-good');
+        popup.popupInput('ur_login', 'Логин должен быть не менее 3 символов');
+        validLogin = false;
+      }else{
+        $.ajax({
+          type: "Post",
+          url: "/user/loginCheck",
+          data: {loginCheck: login},
+          success: function(res){
+            if(res){
+              $('#ur_login').addClass('input-good').removeClass('input-fail');
+              popup.popupInput('ur_login', 'Логин свободен');
+              validLogin = true;
+            }else{
+              $('#ur_login').addClass('input-fail').removeClass('input-good');
+              popup.popupInput('ur_login', 'Логин занят');
+              validLogin = false;
+            }
           }
-        }
-      });
+        });
+      }
     }
   },
   passwordCheck: function(pass){
@@ -134,55 +324,5 @@ var user_registry = {
       return true;
     else
       return false;
-  },
-  fileSelect: function(){
-    var oFile = $('#ur_avatar')[0].files[0];
-    var rFilter = /^(image\/jpeg|image\/jpg|image\/png)$/i;
-    if (! rFilter.test(oFile.type)) {
-      console.log('негодный файл');
-      return;
-    }
-    var oImage = document.getElementById('ur_avatar-preview');
-    var oReader = new FileReader();
-    oReader.onload = function(e) {
-      // e.target.result contains the DataURL which we can use as a source of the image
-      oImage.src = e.target.result;
-      oImage.onload = function () { // onload event handler
-
-        // display step 2
-        // $('#ur_avatar-preview').fadeIn(500);
-
-        // display some basic image info
-        // var sResultFileSize = bytesToSize(oFile.size);
-        // Create variables (in this scope) to hold the Jcrop API and image size
-        var jcrop_api, boundx, boundy;
-
-        // destroy Jcrop if it is existed
-        if (typeof jcrop_api != 'undefined')
-            jcrop_api.destroy();
-
-        // initialize Jcrop
-        $('#ur_avatar-preview').Jcrop({
-            minSize: [100, 100], // min crop size
-            aspectRatio : 1, // keep aspect ratio 1:1
-            bgFade: true, // use fade effect
-            bgOpacity: .3 // fade opacity
-            // onChange: updateInfo,
-            // onSelect: updateInfo,
-            // onRelease: clearInfo
-        }, function(){
-
-            // use the Jcrop API to get the real image size
-            var bounds = this.getBounds();
-            boundx = bounds[0];
-            boundy = bounds[1];
-
-            // Store the Jcrop API in the jcrop_api variable
-            jcrop_api = this;
-        });
-      };
-    };
-    oReader.readAsDataURL(oFile);
   }
-
 };

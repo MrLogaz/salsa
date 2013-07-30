@@ -9,14 +9,17 @@ block left_content
           .post-header
             .post-author
               if post.authorAvatar
-              a.post-author-ava(href="/" + post.behalf + "/" + post.authorLogin)
-                img.author-ava(src="/files/" + post.behalf + "/" + post.authorLogin + "/ava-60.jpg")
+                a.post-author-ava(href="/" + post.behalf + "/" + post.authorLogin)
+                  img.author-ava(src="/files/" + post.behalf + "/" + post.authorLogin + "/ava-60.jpg")
 
             .post-info
               .author-name
                 a(href="/user/" + post.authorLogin)= post.authorFname + ' ' + post.authorSname
-                .post-date= post.date.getDay() + '.' + post.date.getMonth() + '.' + post.date.getFullYear()
-              a.post-title(href="/event/" + post.latUrl)= post.title
+                .post-date
+                  span.date-day= post.date.getDate()
+                  span.date-month(data-value=post.date.getMonth())= post.date.getMonth()
+                  span.date-year(data-value=post.date.getFullYear())= post.date.getFullYear()
+              a.post-title(href="/events/" + post.latUrl)= post.title
 
           .post-anons= post.anons
           .post-event
@@ -40,6 +43,7 @@ block left_content
               .post-preview
                 img(src="/files/post/p" + post.id + "/prew.jpg")
 
+    include ../../block/pagination
 
   else
     p Событий нет

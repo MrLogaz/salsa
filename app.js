@@ -60,6 +60,8 @@ app.get('/user/:login', authorized.check, profile.profile);
 // profile settings
 app.get('/user/:login/settings', authorized.check, profile.settingsGet);
 app.post('/user/:login/settings', authorized.check, profile.settingsPost);
+// profile avatar
+app.post('/user-avatar', authorized.check, profile.avatarPost);
 
 //EVENT.js
 // main
@@ -68,6 +70,8 @@ app.get('/events', authorized.check, event.listAll);
 app.get('/events/create', authorized.check, event.createGet);
 app.post('/events/create', authorized.check, event.createPost);
 app.post('/events/titleCheck', event.titleCheck);
+//event page
+app.get('/events/:title', authorized.check, event.eventPage);
 
 
 

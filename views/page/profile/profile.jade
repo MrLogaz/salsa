@@ -12,8 +12,10 @@ block content
             img.defoult-ava(src="/images/logo_150px.png")
 
         .pu-function
-          a(href="/user/" + profile.login + "/settings") Настройки
+          .pu-function-item(onclick="popup.popupInfoShow(600);") Загрузить аватар
+          a.pu-function-item(href="/user/" + profile.login + "/settings") Настройки
           //- p= data.region
+
           p Добавить в друзья
           p Добавить в друзья
       .pu-right  
@@ -33,3 +35,5 @@ block content
           .feed-row Я пойду на фестиваль
           .feed-row Открытый урок по пачанге!
 
+block popupInfo
+  include ../../block/avatar

@@ -1,0 +1,21 @@
+#blanket(style="display:none;", onclick="cropAvatar.cropCancel();")
+#popupInfo(style="display:none;")
+  .popupInfo_header
+    .popupInfo_title Выделите область на фотографии, которая будет показана
+    a#popupInfoClose(onclick="cropAvatar.cropCancel();")
+  .popupInfo_body
+    form.form#avatarUpload(method="post", action="/user-avatar", enctype="multipart/form-data")
+      .field
+        label(for="form_avatar") Выбери изображение
+        input#form_avatar(type="file", name="avatar", onchange="cropAvatar.upload_ava();")
+      .field.dnone
+        input#form_avatarPx(type="hidden", name="form_avatarPx")
+        input#form_avatarPy(type="hidden", name="form_avatarPy")
+        input#form_avatarPw(type="hidden", name="form_avatarPw")
+        input#form_avatarPh(type="hidden", name="form_avatarPh")
+        input#form_avatar-scale(type="hidden", name="form_avatarPs")
+      #form_avatar-preview-block
+        img#form_avatar-preview
+      .field
+        input#popupInfo_apply.dnone(type="submit", onclick="cropAvatar.cropSave();", value="Сохранить")
+        a.popupInfo_cancel(onclick="cropAvatar.cropCancel();") Отменить

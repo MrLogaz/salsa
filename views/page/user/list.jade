@@ -3,18 +3,18 @@ extends ../../layout/home
 block left_content
   .title1= head.title
   .user-list
-    - each user in users
-      a(href="/user/" + user.login).user-list_item
+    - each userItem in users
+      a(href="/user/" + userItem.login).user-list_item
         .uli_avatar
-          if(user.avatar)
-            img(src="/files/user/" + user.login + "/ava-60.jpg", width='50')
+          if(userItem.avatar)
+            img(src="/files/user/" + userItem.login + "/ava-60.jpg", width='50')
           else 
             .uli_avatar-def
-              if(user.sex == 'man')
+              if(userItem.sex == 'man')
                 img(src="/images/vs_boy_70.png", height='52')
-              if(user.sex == 'woman')
+              if(userItem.sex == 'woman')
                 img(src="/images/vs_girl_62.png", height='52')
         .uli_info
-          .uli_fname= user.fname
-          .uli_sname= user.sname
-          .uli_city= user.city
+          .uli_fname= userItem.fname
+          .uli_sname= userItem.sname
+          .uli_city= userItem.city

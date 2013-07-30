@@ -1,0 +1,36 @@
+.pagination_wrap {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.pagination_body {
+  padding: 20px;
+}
+.pagination_item {
+  padding: 3px 8px;
+  margin: 0 10px 0 0;
+  display: inline-block;
+  border-radius: 3px;
+  color: rgb(50,50,50);
+  text-decoration: none;
+  background: rgba(245,182,61,0.5);
+  -webkit-transition: background 200ms;
+  -moz-transition: background 200ms;
+  -o-transition: background 200ms;
+  -ms-transition: background 200ms;
+  transition: background 200ms;
+}
+.pagination_current,
+.pagination_item:hover {
+  text-decoration: none;
+  color: rgb(0,0,0);
+  background: rgba(245,182,61,1);
+}
+.pagination_begin {
+  margin: 0 20px 0 0;
+  padding: 3px 15px;
+}
+.pagination_end {
+  margin: 0 0 0 10px;
+  padding: 3px 15px;
+}

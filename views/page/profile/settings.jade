@@ -21,9 +21,7 @@ block left_content
         label(for="ur_city") Город
         input#ur_city(type="text", value=profile.city, tabindex="5", name="city", placeholder="Город")
       .field
-        label(for="ur_avatar") Аватар
-        input#ur_avatar(type="file", name="avatar", onchange="registry.fileSelect()")
-        img#ur_avatar-preview(width="500")
+        include ../../block/avatar
 
       .field
         label Пол

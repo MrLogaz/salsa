@@ -1,6 +1,5 @@
 var path = require('path');
 var fs = require('fs');
-var im = require('imagemagick');
 var queryUser = require('../db/user').queryUser;
 var dbUser = new queryUser('localhost', 27017);
 var crypto = require('crypto');
@@ -46,8 +45,6 @@ exports.registryPost = function(req, res){
     fname: "",
     sname: "",
     tname: "",
-    country: "",
-    region: "66",
     city: "",
     sex: "",
     avatar: false,
@@ -55,17 +52,14 @@ exports.registryPost = function(req, res){
   };
 
   fs.mkdir(userFilePatch, function (err){
-    if(err) throw err
+    if(err) throw err;
     else {
       dbUser.save(newUser, function(err, dataUser) {
-        if (err) console.log(err);
+        if(err) throw err;
         else{
-          var userCookie = {
-            id: dataUser[0]._id,
-            login: dataUser[0].login,
-            pass: dataUser[0].pass,
-          };
-          res.cookie('user', userCookie);
+          res.cookie('user_id', dataUser[0]._id);
+          res.cookie('user_login', dataUser[0].login);
+          res.cookie('user_pass', dataUser[0].pass);
           req.session.userid = dataUser[0]._id;
           req.session.login = dataUser[0].login;
           res.redirect('/user/' + req.param('login') + '/settings');
@@ -80,12 +74,13 @@ exports.list = function(req, res){
   dbUser.findAll(function (err, dataUsers){
     if(err) throw err
     else {
+      console.log(req.cookies);
       res.render('page/user/list', {
         head: {
           title: 'Танцоры' 
         },
         authorized: req.session.authorized,
-        user: req.cookies.user,
+        user: req.cookies,
         users: dataUsers
       });
     }
@@ -97,24 +92,18 @@ exports.loginPost = function(req, res){
     if(err) throw err
     else {
       if(dataUser){
-        console.log(req.param('pass') +"+"+ dataUser.salt);
         var saltPass = req.param('pass') + dataUser.salt;
         var passHash = crypto.createHash('md5').update(saltPass).digest("hex");
-        console.log(dataUser.pass + "=Loginpost=" +  passHash);
         if(dataUser.pass == passHash){
-          
-          var userCookie = {
-            id: dataUser._id,
-            login: dataUser.login,
-            fname: dataUser.fname,
-            sname: dataUser.sname,
-            tname: dataUser.tname,
-            pass: dataUser.pass,
-            city: dataUser.city,
-            avatar: dataUser.avatar
-          };
-          console.log(userCookie);
-          res.cookie('user', userCookie);
+          res.cookie('user_id', dataUser._id);
+          res.cookie('user_login', dataUser.login);
+          res.cookie('user_fname', dataUser.fname);
+          res.cookie('user_sname', dataUser.sname);
+          res.cookie('user_tname', dataUser.tname);
+          res.cookie('user_pass', dataUser.pass);
+          res.cookie('user_city', dataUser.city);
+          res.cookie('user_avatar', dataUser.avatar);
+
           req.session.userid = dataUser._id;
           req.session.login = dataUser.login;
           req.session.authorized = true;
@@ -130,7 +119,7 @@ exports.loginPost = function(req, res){
 };
 
 exports.loginGet = function(req, res){
-  if(req.session.authorized && req.session.id == req.cookies.user._id){
+  if(req.session.authorized && req.session.id == req.cookies.user_id){
     res.redirect('/');
   }else{
     res.render('page/user/login', {
@@ -143,6 +132,13 @@ exports.loginGet = function(req, res){
 
 exports.logout = function(req, res){
   req.session.destroy();
-  res.clearCookie('user');
+  res.clearCookie('user_id');
+  res.clearCookie('user_login');
+  res.clearCookie('user_fname');
+  res.clearCookie('user_sname');
+  res.clearCookie('user_sname');
+  res.clearCookie('user_pass');
+  res.clearCookie('user_city');
+  res.clearCookie('user_avatar');
   res.redirect('/users');
 };

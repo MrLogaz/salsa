@@ -1,6 +1,6 @@
 var path = require('path');
 var fs = require('fs');
-var im = require('imagemagick');
+var gm = require('gm');
 var queryUser = require('../db/user').queryUser;
 var region = require('../db/region');
 var dbUser = new queryUser('localhost', 27017);
@@ -19,7 +19,7 @@ exports.profile = function(req, res){
             title: '404'
           },
           authorized: req.session.authorized,
-          user: req.cookies.user
+          user: req.cookies
         });
       }else{
         res.render('page/profile/profile', {
@@ -27,7 +27,7 @@ exports.profile = function(req, res){
             title: 'Танцор ' + profile.login
           },
           authorized: req.session.authorized,
-          user: req.cookies.user,
+          user: req.cookies,
           profile: profile
         });
       }
@@ -38,7 +38,6 @@ exports.profile = function(req, res){
 
 
 exports.settingsGet = function(req, res){
-  console.log(req.session.login +"=="+ req.param('login'));
   if(req.session.authorized && req.session.login == req.param('login')){
     dbUser.findByLogin(req.param('login'), function(err, profile){
       if(err) throw err
@@ -48,7 +47,7 @@ exports.settingsGet = function(req, res){
             title: 'Настройки'
           },
           authorized: req.session.authorized,
-          user: req.cookies.user,
+          user: req.cookies,
           profile: profile
         });
       }
@@ -60,11 +59,6 @@ exports.settingsGet = function(req, res){
 
 exports.settingsPost = function(req, res){
   var userFilePatch = __dirname + '/../public/files/user/' + req.param('login');
-  var userAvatar = false;
-  var targetPath = path.resolve(userFilePatch + '/ava-');
-  
-  if(req.files.avatar.size > 30) {userAvatar = true;}
-  else {userAvatar = false}
 
   var profileSettings = {
     fname: req.param('fname'),
@@ -73,56 +67,69 @@ exports.settingsPost = function(req, res){
     region: req.param('region'),
     city: req.param('city'),
     sex: req.param('sex'),
-    avatar: userAvatar,
     about: req.param('about')
   };
 
+    
+  dbUser.update(req.session.userid, profileSettings, function(err, newSetting) {
+    if(err) throw (err);
+    else{
+      res.cookie('user_id', req.session.userid);
+      res.cookie('user_login', req.session.login);
+      res.cookie('user_fname', newSetting.fname);
+      res.cookie('user_sname', newSetting.sname);
+      res.cookie('user_tname', newSetting.tname);
+      res.cookie('user_pass', req.cookies.user_pass);
+      res.cookie('user_city', newSetting.city);
+      res.redirect('/user/' + req.session.login);
+    }
+  });
+};
+
+
+exports.avatarPost = function(req, res){
+
+  var userFilePatch = __dirname + '/../public/files/user/' + req.session.login;
+  var userAvatar = false;
+  var targetPath = path.resolve(userFilePatch + '/ava-');
+  
+  if(req.files.avatar.size > 30) {userAvatar = true;}
+  else {userAvatar = false}
+  var ava = {
+    x: req.param('form_avatarPx'),
+    y: req.param('form_avatarPy'),
+    w: req.param('form_avatarPw'),
+    h: req.param('form_avatarPh')
+  };
 
   var tempPath = req.files.avatar.path;
-  if(req.files.avatar.size > 30){
-    im.identify(tempPath, function(err, metadata){
-      if (err) throw err;
+  if(userAvatar){
+    gm(tempPath).identify(function(err, metadata){
+      if(err) throw (err);
       else {
         if(metadata.width > 600){
           var imgWidth = 600;
         }else{
           var imgWidth = metadata.width;
         }
-        im.resize({
-          srcPath: tempPath,
-          dstPath: targetPath + '60.jpg',
-          width:   60,
-          format: 'jpg'
-        }, function (err, stdout, stderr){
+        gm(tempPath)
+        .crop(ava.w, ava.h, ava.x, ava.y)
+        .resize(60,60)
+        .write(targetPath + '60.jpg', function (err) {
           if (err) throw err;
-          else{
-            im.resize({
-              srcPath: tempPath,
-              dstPath: targetPath + 'orig.jpg',
-              width:   imgWidth,
-              format: 'jpg'
-            }, function (err, stdout, stderr){
+          else {
+            gm(tempPath)
+            .resize(imgWidth, 500)
+            .write(targetPath + 'orig.jpg', function (err) {
               if (err) throw err;
-              else{
-                dbUser.update(req.session.userid, profileSettings, function(err, newSetting) {
-                  if (err) console.log(err);
-                  else{
-                    var userCookie = {
-                      id: req.session.userid,
-                      login: req.session.login,
-                      pass: req.cookies.user.pass,
-                      fname: newSetting.fname,
-                      sname: newSetting.sname,
-                      tname: newSetting.tname,
-                      city: newSetting.city,
-                      region: newSetting.region,
-                      avatar: newSetting.avatar
-                    };
-                    res.cookie('user', userCookie);
+              else {
+                dbUser.update(req.session.userid, {avatar: true}, function(err, newSetting) {
+                  if (err) throw err;
+                  else {
+                    res.cookie('user_avatar', true);
                     res.redirect('/user/' + req.session.login);
                   }
                 });
-              
                 fs.unlink(tempPath, function (err){
                   if (err) throw err;
                 });
@@ -133,25 +140,6 @@ exports.settingsPost = function(req, res){
       }
     });
   }else{
-    dbUser.update(req.session.userid, profileSettings, function(err, newSetting) {
-      if (err) console.log(err);
-      else{
-        var userCookie = {
-          id: req.session.userid,
-          login: req.session.login,
-          pass: req.cookies.user.pass,
-          fname: newSetting.fname,
-          sname: newSetting.sname,
-          tname: newSetting.tname,
-          city: newSetting.city,
-          region: newSetting.region,
-          avatar: newSetting.avatar
-        };
-        res.cookie('user', userCookie);
-        res.redirect('/user/' + req.session.login);
-      }
-    });
-  
     fs.unlink(tempPath, function (err){
       if (err) throw err;
     });

@@ -1,0 +1,47 @@
+#popup-input {
+  position: absolute;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  padding: 3px 10px;
+  opacity: 0;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-transition: opacity 0.4s ease;
+}
+#popup-input.pi_show {
+  opacity: 1;
+}
+
+#blanket {
+	background-color: rgba(40,20,0,0.3);
+	position: absolute;
+	z-index: 9001;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+}
+#popupInfo {
+	position: absolute;
+	background: #fff;
+	width: 400px;
+	/*height: 400px;*/
+	border: 1px solid rgba(206,100,0,0.8);
+	z-index: 9002;
+	padding: 20px;
+}
+#popupInfoClose {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	top: 10px;
+	right: 10px;
+	background: url(/images/popupClose.png);
+	cursor: pointer;
+	opacity: 0.7;
+	-webkit-transition: opacity 0.3s ease;
+}
+.popupInfo_header {
+	height: 30px;
+}
+#popupInfoClose:hover {
+	opacity: 1;
+}

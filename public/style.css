@@ -52,6 +52,13 @@ a:hover {
   font-size: 24px;
   color: rgb(206,100,0);
 }
+
+.date-month {
+  padding: 0 3px;
+}
+.dnone {
+  display: none;
+}
 .form .field {
   margin: 0 0 10px;
   display: inline-block;
@@ -156,18 +163,88 @@ a:hover {
   background-color: rgba(200,50,50,0.1) !important;
   border-color: rgb(200,50,50) !important;
 }
-
-
+.pagination_wrap {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.pagination_body {
+  padding: 20px;
+}
+.pagination_item {
+  padding: 3px 8px;
+  margin: 0 10px 0 0;
+  display: inline-block;
+  border-radius: 3px;
+  color: rgb(50,50,50);
+  text-decoration: none;
+  background: rgba(245,182,61,0.5);
+  -webkit-transition: background 200ms;
+  -moz-transition: background 200ms;
+  -o-transition: background 200ms;
+  -ms-transition: background 200ms;
+  transition: background 200ms;
+}
+.pagination_current,
+.pagination_item:hover {
+  text-decoration: none;
+  color: rgb(0,0,0);
+  background: rgba(245,182,61,1);
+}
+.pagination_begin {
+  margin: 0 20px 0 0;
+  padding: 3px 15px;
+}
+.pagination_end {
+  margin: 0 0 0 10px;
+  padding: 3px 15px;
+}
 #popup-input {
   position: absolute;
   border: 1px solid #ccc;
   background: #f9f9f9;
   padding: 3px 10px;
   opacity: 0;
+  font-family: 'Open Sans', sans-serif;
   -webkit-transition: opacity 0.4s ease;
 }
 #popup-input.pi_show {
   opacity: 1;
+}
+
+#blanket {
+	background-color: rgba(40,20,0,0.3);
+	position: absolute;
+	z-index: 9001;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+}
+#popupInfo {
+	position: absolute;
+	background: #fff;
+	width: 400px;
+	/*height: 400px;*/
+	border: 1px solid rgba(206,100,0,0.8);
+	z-index: 9002;
+	padding: 20px;
+}
+#popupInfoClose {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	top: 10px;
+	right: 10px;
+	background: url(/images/popupClose.png);
+	cursor: pointer;
+	opacity: 0.7;
+	-webkit-transition: opacity 0.3s ease;
+}
+.popupInfo_header {
+	height: 30px;
+}
+#popupInfoClose:hover {
+	opacity: 1;
 }
 #vs-header {
   width: 100%;
@@ -644,6 +721,19 @@ img.jcrop-preview {
   margin-left: 0;
 }
 
+.pu-function {
+
+}
+.pu-function-item {
+  display: block;
+  cursor: pointer;
+  padding: 5px 10px;
+  background: rgba(250,222,140,1);
+  border-bottom: 1px solid rgb(245,202,130);
+}
+.pu-function-item:hover {
+  background: rgba(250,222,140,0.7);
+}
 
 #userSettings .first-label .ur_img-dancer {
   position: absolute;
@@ -674,7 +764,7 @@ img.jcrop-preview {
 }
 #userLoginPage {
   margin: 20px auto;
-  width: 550px;
+  width: 400px;
 }
 #userLoginPage input[type="submit"] {
   margin: 20px 26px 0 0px;

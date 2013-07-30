@@ -5,16 +5,16 @@
 #user-notice.block
   span.num 2
 
-a.user-link.block(href="/user/" + user.login)
-  if user.fname
-    span.name= user.fname
+a.user-link.block(href="/user/" + user.user_login)
+  if user.user_fname
+    span.name= user.user_fname
   else
-    span.name= user.login
-  if user.avatar
+    span.name= user.user_login
+  if user.user_avatar
     .ava
-      img(src="/files/user/" + user.login + "/ava-60.jpg")
-if user.school
-  a.user-school.block(href="/school/s" + user.school)
+      img(src="/files/user/" + user.user_login + "/ava-60.jpg")
+if user.user_school
+  a.user-school.block(href="/school/s" + user.user_school)
     .ava
-      img(src="/files/school/s" + user.school + "/ava_30.jpg")
+      img(src="/files/school/s" + user.user_school + "/ava_30.jpg")
 a.block.user-out(href="/logout", title="Выйти") Выйти

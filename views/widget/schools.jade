@@ -2,6 +2,6 @@
   .w-header 
     a(href="/schools") Школы
   .w-body
-    for school in w_schools
-      a.w-item-link(href="/school/" + school.login, title=school.name)
-        img.w-item-img(src="/files/school/s" + school.id + "/ava_50.jpg")
+    for schoolItem in w_schools
+      a.w-item-link(href="/school/" + schoolItem.login, title=schoolItem.name)
+        img.w-item-img(src="/files/school/s" + schoolItem.id + "/ava_50.jpg")

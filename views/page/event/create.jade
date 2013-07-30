@@ -24,10 +24,11 @@ block left_content
         label(for="ec_price") Цена
         input#ec_price(type="text", tabindex="6", name="price", placeholder="Цена")
       .field
-        label(for="ec_avatar") Изображение
-        input#ec_avatar(type="file", name="avatar", onchange="registry.fileSelect()")
-        img#ur_avatar-preview(width="500")
-      .field.hidden
+        label(for="form_avatar") Аватар
+        input.form-file#event_avatar(type="file", name="avatar", onchange="image.showPreview('previewImgEvent', 'event_avatar');")
+      .form-preview
+        img#previewImgEvent(style="max-width: 380px; float: right; margin-right: 20px;")
+
       if user.school
         .field
           label Написать от 
@@ -40,7 +41,7 @@ block left_content
               img.ur_img-dancer(src="/images/vs_boy_70.png")
       else
         input(type="hidden", name="behalf", value="user")
-        input(type="hidden", name="behalfid", value=user.id)
+        input(type="hidden", name="behalfid", value=user._id)
       
       .field.field-right
         input#ur_submit(type="submit", tabindex="7", value="Создать")
@@ -48,3 +49,6 @@ block left_content
 block right_content
   .userRegistryInfo
     p Добавляй скорей новое событие
+
+block popupInfo
+  
