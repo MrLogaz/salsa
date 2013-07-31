@@ -1,4 +1,4 @@
-if pagination.count > pagination.limit
+if (pagination && pagination.count > pagination.limit)
   .pagination_wrap
     .pagination_body
       a.pagination_item.pagination_begin(href="/" + pagination.link) В начало

@@ -39,9 +39,9 @@ block left_content
               //- .tel
               //-   span.key Телефон:
               //-   span.val= post.data.tel
-            if post.preview
+            if post.avatar
               .post-preview
-                img(src="/files/post/p" + post.id + "/prew.jpg")
+                img(src="/files/event/" + post.latUrl + "/prev.jpg")
 
     include ../../block/pagination
 

@@ -14,11 +14,21 @@ var vow = require('vow');
 
 exports.listAll = function(req, res){
   var skip = 0;
-  var limit = 5;
+  var limit = 2;
   var page = 1;
   dbEvent.count(function(err, count){
     if(err) throw err;
     else {
+      if(count == 0) {
+        res.render('page/event/listAll', {
+          head: {
+            title: 'События' 
+          },
+          authorized: req.session.authorized,
+          user: req.cookies,
+          posts: false,
+        });
+      }
       if(req.query.p){
         page = +req.query.p;
         if(page != NaN && page > 0){
@@ -101,7 +111,10 @@ exports.createGet = function(req, res){
 exports.createPost = function(req, res){
   rustolat.translit(req.param('title'), function(latUrl){
     var eventFilePatch = __dirname + '/../public/files/event/' + latUrl;
-    var tempPath = req.files.avatar.path;
+    console.log(eventFilePatch);
+    var eventAvatar = false;
+    if(req.files.avatar.size > 30) {eventAvatar = true;}
+    else {eventAvatar = false}
     var newEvent = {
       latUrl: latUrl,
       title: req.param('title'),
@@ -110,28 +123,58 @@ exports.createPost = function(req, res){
       region: req.param('region'),
       address: req.param('address'),
       price: req.param('price'),
-      avatar: false,
+      avatar: eventAvatar,
       behalf: req.param('behalf'),
       behalfId: req.param('behalfid'),
       author: req.session.login,
       authorId: req.session.userid,
       date: new Date()
     };
+    var tempPath = req.files.avatar.path;
+    var targetPath = path.resolve(eventFilePatch + '/ava-');
+
 
     fs.mkdir(eventFilePatch, function (err){
-      if(err) throw err
+      if(err) throw err;
       else {
-
-        dbEvent.save(newEvent, function(err, dataEvent) {
-          if(err) throw err
-          else{
-            res.redirect('/events/' + latUrl);
-          }
-        });
-        fs.unlink(tempPath, function (err){
-          if (err) throw err;
-        });
-        
+        if(eventAvatar){
+          gm(tempPath).identify(function(err, metadata){
+            if(err) throw (err);
+            else {
+              if(metadata.size.width > 600){
+                var imgWidth = 600;
+              }else{
+                var imgWidth = metadata.size.width;
+              }
+              gm(tempPath)
+              .resize(imgWidth)
+              .write(targetPath + 'prev.jpg', function (err) {
+                if (err) throw err;
+                else {
+                  dbEvent.save(newEvent, function(err, dataEvent) {
+                    if(err) throw err
+                    else{
+                      res.redirect('/events/' + latUrl);
+                    }
+                  });
+                  fs.unlink(tempPath, function (err){
+                    if (err) throw err;
+                  });
+                }
+              });
+            }
+          });
+        }else{
+          dbEvent.save(newEvent, function(err, dataEvent) {
+            if(err) throw err
+            else{
+              res.redirect('/events/' + latUrl);
+            }
+          });
+          fs.unlink(tempPath, function (err){
+            if (err) throw err;
+          });
+        }
       }
     });
   });
@@ -167,7 +210,7 @@ exports.eventPage = function(req, res){
         });
       }else{
         
-        dbUser.findById(dataEvent.behalfId, function(err, dataUser){
+        dbUser.findById(dataEvent.behalfId, function (err, dataUser){
           if(err) throw err
           else {
             res.render('page/event/event', {

@@ -107,10 +107,10 @@ exports.avatarPost = function(req, res){
     gm(tempPath).identify(function(err, metadata){
       if(err) throw (err);
       else {
-        if(metadata.width > 600){
+        if(metadata.size.width > 600){
           var imgWidth = 600;
         }else{
-          var imgWidth = metadata.width;
+          var imgWidth = metadata.size.width;
         }
         gm(tempPath)
         .crop(ava.w, ava.h, ava.x, ava.y)
@@ -119,7 +119,7 @@ exports.avatarPost = function(req, res){
           if (err) throw err;
           else {
             gm(tempPath)
-            .resize(imgWidth, 500)
+            .resize(imgWidth)
             .write(targetPath + 'orig.jpg', function (err) {
               if (err) throw err;
               else {

@@ -41,7 +41,7 @@ block left_content
               img.ur_img-dancer(src="/images/vs_boy_70.png")
       else
         input(type="hidden", name="behalf", value="user")
-        input(type="hidden", name="behalfid", value=user._id)
+        input(type="hidden", name="behalfid", value=user.user_id)
       
       .field.field-right
         input#ur_submit(type="submit", tabindex="7", value="Создать")
