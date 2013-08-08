@@ -1,0 +1,14 @@
+extends ../../layout/home
+  
+block left_content
+  h1.title1 Пора властвовать!
+
+  a.button.big-button(href="/admin/users") Пользователей 
+    span.red-text #{userCount}
+  br
+  br
+  a.button.big-button(href="/admin/events") Событий 
+    span.red-text #{eventCount}
+
+block right_content
+  span Правый админский

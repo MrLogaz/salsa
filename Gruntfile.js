@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 			main: {
 				files: {
 					// Результат задачи concat
-					'public/scripts.min.js': '<%= concat.main.dest %>'
+					//'public/scripts.min.js': '<%= concat.main.dest %>'
 				}
 			}
 		},

@@ -3,18 +3,19 @@ var fs = require('fs');
 var gm = require('gm');
 var queryUser = require('../db/user').queryUser;
 var queryEvent = require('../db/event').queryEvent;
-var region = require('../db/region');
+var city = require('../db/cityjson');
 var dbUser = new queryUser('localhost', 27017);
 var dbEvent = new queryEvent('localhost', 27017);
 var crypto = require('crypto');
 var rustolat = require('../modules/url_rus-to-lat');
+var designText = require('../modules/designText');
 var vow = require('vow');
 
 
 
 exports.listAll = function(req, res){
   var skip = 0;
-  var limit = 2;
+  var limit = 5;
   var page = 1;
   dbEvent.count(function(err, count){
     if(err) throw err;
@@ -40,7 +41,7 @@ exports.listAll = function(req, res){
         }else
           res.redirect('/events');
       }
-      dbEvent.findAll(skip, function (err, dataEvents){
+      dbEvent.findAll(skip, limit, function (err, dataEvents){
         if(err) throw err
         else {
           var eventsLength = dataEvents.length;
@@ -55,9 +56,9 @@ exports.listAll = function(req, res){
             return promise;
           };
           function compare(a,b) {
-            if (a.date < b.date)
+            if (a.created < b.created)
                return 1;
-            if (a.date > b.date)
+            if (a.created > b.created)
               return -1;
             return 0;
           }
@@ -109,26 +110,33 @@ exports.createGet = function(req, res){
 };
 
 exports.createPost = function(req, res){
+  if (req.param('title').length < 6){
+    res.redirect('/events/create');
+    return false;
+  }
   rustolat.translit(req.param('title'), function(latUrl){
     var eventFilePatch = __dirname + '/../public/files/event/' + latUrl;
-    console.log(eventFilePatch);
     var eventAvatar = false;
+
     if(req.files.avatar.size > 30) {eventAvatar = true;}
     else {eventAvatar = false}
+
     var newEvent = {
       latUrl: latUrl,
       title: req.param('title'),
       anons: req.param('anons'),
       text: req.param('text'),
-      region: req.param('region'),
-      address: req.param('address'),
+      date: new Date(req.param('date_hidden')),
+      city: req.param('city'),
+      cityId: req.param('cityid'),
+      address: req.param('street') + ' ' + req.param('house'),
       price: req.param('price'),
       avatar: eventAvatar,
       behalf: req.param('behalf'),
       behalfId: req.param('behalfid'),
       author: req.session.login,
       authorId: req.session.userid,
-      date: new Date()
+      created: new Date()
     };
     var tempPath = req.files.avatar.path;
     var targetPath = path.resolve(eventFilePatch + '/ava-');
@@ -151,12 +159,16 @@ exports.createPost = function(req, res){
               .write(targetPath + 'prev.jpg', function (err) {
                 if (err) throw err;
                 else {
-                  dbEvent.save(newEvent, function(err, dataEvent) {
-                    if(err) throw err
-                    else{
-                      res.redirect('/events/' + latUrl);
-                    }
+                  designText.toHtml(newEvent.text, function (htmlText){
+                    newEvent.text = htmlText;
+                    dbEvent.save(newEvent, function (err, dataEvent) {
+                      if(err) throw err
+                      else{
+                        res.redirect('/events/' + latUrl);
+                      }
+                    });
                   });
+                  
                   fs.unlink(tempPath, function (err){
                     if (err) throw err;
                   });
@@ -165,11 +177,14 @@ exports.createPost = function(req, res){
             }
           });
         }else{
-          dbEvent.save(newEvent, function(err, dataEvent) {
-            if(err) throw err
-            else{
-              res.redirect('/events/' + latUrl);
-            }
+          designText.toHtml(newEvent.text, function (htmlText){
+            newEvent.text = htmlText;
+            dbEvent.save(newEvent, function (err, dataEvent) {
+              if(err) throw err
+              else{
+                res.redirect('/events/' + latUrl);
+              }
+            });
           });
           fs.unlink(tempPath, function (err){
             if (err) throw err;
@@ -209,7 +224,6 @@ exports.eventPage = function(req, res){
           user: req.cookies
         });
       }else{
-        
         dbUser.findById(dataEvent.behalfId, function (err, dataUser){
           if(err) throw err
           else {

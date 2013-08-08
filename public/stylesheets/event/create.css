@@ -1,0 +1,16 @@
+#ec_street {
+	width: 270px;
+}
+#ec_house {
+	width: 70px;
+	margin: 0 0 0 3px;
+}
+#ec_text {
+	height: 250px;
+	font-size: 13px;
+	line-height: 17px;
+}
+#ec_anons {
+	font-size: 13px;
+	line-height: 17px;
+}

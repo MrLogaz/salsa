@@ -1,7 +1,55 @@
+.admin-userItem {
+	position: relative;
+	border-bottom: 1px solid rgb(255,200,65);
+	padding: 10px;
+	vertical-align: top;
+	height: 60px;
+}
+.admin-userItem:last-child {
+	border: none;
+}
+
+.admin-user-ava {
+	display: inline-block;
+	vertical-align: top;
+}
+.admin-user-right {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 0 0 20px;
+	width: 520px;
+}
+.admin-user-login {
+	font-size: 18px;
+}
+.admin-user-city {
+	color: rgb(206,100,0);
+}
+.admin-user-regDate {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	color: rgb(120,120,120);
+}
 @import url(http://fonts.googleapis.com/css?family=Comfortaa:400,700,300&subset=latin,cyrillic);
 /*font-family: 'Comfortaa', cursive;*/
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,cyrillic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,cyrillic);*/
 /*font-family: 'Open Sans', sans-serif;*/
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/opensans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Comfortaa Light'), local('Comfortaa-Light'), url(/comfortaa.woff) format('woff');
+}
+
+
+
 body {
   font: 14px 'Comfortaa', cursive;
   background: rgba(255,255,255,1);
@@ -42,6 +90,7 @@ a:hover {
 .left-page-block {
   float: left;
   width: 641px;
+  border-right: 1px solid rgb(255,232,140);
 }
 .right-page-block {
   width: 341px;
@@ -58,6 +107,10 @@ a:hover {
 }
 .dnone {
   display: none;
+}
+
+.red-text {
+  color: rgb(230,40,30);
 }
 .form .field {
   margin: 0 0 10px;
@@ -77,6 +130,7 @@ a:hover {
 .form .field input[type="text"],
 .form .field input[type="email"],
 .form .field input[type="password"],
+.form .field input[type="number"],
 .form .field textarea {
   position: relative;
   background: rgb(255,255,255);
@@ -163,6 +217,35 @@ a:hover {
   background-color: rgba(200,50,50,0.1) !important;
   border-color: rgb(200,50,50) !important;
 }
+.button {
+	position: relative;
+	display: inline-block;
+	background: rgb(255,224,63);
+	border: 1px solid rgb(240,180,65);
+	border-radius: 3px;
+	padding: 3px 5px;
+	color: rgb(0,0,0);
+	text-shadow: 0 0 3px rgb(240,240,240);
+}
+.button:hover {
+	color: rgb(0,0,0);
+	text-decoration: none;
+	border-color: rgb(250,190,75);
+	background: rgb(255,234,83);
+}
+.big-button {
+	padding: 10px 20px;
+	font-size: 18px;
+}
+.right-column-button {
+	width: 331px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	vertical-align: middle;
+	font-size: 20px;
+}
+
 .pagination_wrap {
   display: inline-block;
   width: 100%;
@@ -393,10 +476,25 @@ a:hover {
   width: 25px;
   height: 25px;
 }
+#ec_street {
+	width: 270px;
+}
+#ec_house {
+	width: 70px;
+	margin: 0 0 0 3px;
+}
+#ec_text {
+	height: 250px;
+	font-size: 13px;
+	line-height: 17px;
+}
+#ec_anons {
+	font-size: 13px;
+	line-height: 17px;
+}
 .vs-feed {
   padding: 10px 0px 10px 0;
   width: 640px;
-  border-right: 1px solid rgb(255,232,140);
 }
 .feed-row {
   position: relative;
@@ -487,6 +585,29 @@ a:hover {
 }
 .feed-row .event-data .val {
   font-size: 14px;
+}
+.feed-row .post-text {
+  padding: 20px 0;
+}
+.autocomplete-suggestions {
+  border: 1px solid rgb(245,182,61);
+  border-top: none;
+  border-radius: 3px;
+  background: rgb(255,255,255);
+  overflow: auto;
+}
+.autocomplete-suggestion {
+  padding: 3px 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+.autocomplete-selected {
+  background: rgba(235,180,80,0.3);
+}
+.autocomplete-suggestion strong {
+  color: rgb(225,152,41);
+  margin: 0 1px 0 0;
 }
 /* jquery.Jcrop.css v0.9.12 - MIT License */
 /*
@@ -654,6 +775,160 @@ a:hover {
 .jcrop-holder img,
 img.jcrop-preview {
   max-width: none;
+}
+.add-panel {
+    position: relative;
+    z-index: 100;
+    margin: 20px;
+}
+
+.add-panel .wrp {
+    width: 680px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.add-panel__map {
+    width: 570px;
+    height: 200px;
+    float: left;
+    padding: 10px;
+    border-radius: 3px;
+    background: #F2F2F2;
+    -moz-box-shadow: 0px 1px 0px rgb(255, 255, 255), inset 0px 1px 3px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 1px 0px rgb(255, 255, 255), inset 0px 1px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 1px 0px rgb(255, 255, 255), inset 0px 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+#map {
+    background: #F2F2F2;
+    background-size: 473px 147px;
+    cursor: move;
+    display: none;
+}
+
+.add-panel__request-ui input[type="text"],
+{
+    width: 240px;
+}
+
+label {
+    font-size: 100%;
+    font: inherit;
+    font-weight: normal;
+    font-style: normal;
+    vertical-align: baseline;
+    font-family: Helvetica, Arial;
+}
+
+.regular__ctrls .ffield {
+    padding-top: 2px;
+    padding-bottom: 11px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.regular__ctrls .ffield__lbl {
+    display: block;
+    width: 150px;
+    height: 100%;
+    float: left;
+    padding: 5px 0 0 20px;
+    font-size: 14px;
+    color: #333333;
+}
+
+.regular__ctrls   .ffield__lbl2 {
+    float: left;
+    font-size: 14px;
+    padding: 5px 12px 0 22px;
+    color: #333333;
+}
+
+.regular__ctrls input[type="text"] {
+    width: 128px;
+    display: inline-block;
+    height: 23px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, Arial;
+    font-size: 13px !important;
+    text-indent: 8px;
+    line-height: 15px;
+    border: 1px solid #C2C2C2;
+    border-top: 1px solid #919292;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px #e5e5e5 inset;
+    outline: none;
+}
+
+.regular__ctrls input[type="text"].small {
+    width: 150px;
+}
+
+.regular__ctrls input[type="text"].long {
+    width: 490px;
+}
+
+/* Custom Autocomplete */
+.ui-autocomplete {
+    background: #ffffff;
+    border: 1px solid #B1B1B1;
+    overflow-y: auto;
+    max-height: 400px;
+    max-width: 490px;
+}
+
+.ui-autocomplete li {
+    font-size: 13px;
+
+    border-top: 1px solid #E2E2E2;
+
+}
+.ui-menu-item {
+    cursor: pointer;
+}
+.ui-autocomplete li:first-child {
+    border: none;
+}
+
+.ui-autocomplete li a {
+    display: block;
+    padding: 0 10px;
+    line-height: 23px;
+}
+
+.ui-autocomplete li:hover a,
+.ui-autocomplete li a:hover {
+    font-weight: normal;
+    color: #333333;
+}
+
+.ui-autocomplete li .ac-s {
+    color: #52A3B6;
+}
+
+.ui-autocomplete li .ac-s2 {
+    color: #333333;
+}
+
+.ui-autocomplete li .ac-s,
+.ui-autocomplete li .ac-s2 {
+    font-weight: bold;
+}
+
+.ui-autocomplete li .ac-st {
+    color: #AAAAAA;
+}
+#yamap {
+	width: 575px;
+	height: 300px;
+	padding: 5px;
+	background: rgba(235,180,80,0.5);
+	border: 1px solid rgb(245,182,61);
+	border-radius: 4px;
+	display: none;
 }
 /* profile */
 #profileUser {

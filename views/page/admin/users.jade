@@ -1,0 +1,29 @@
+extends ../../layout/home
+  
+block left_content
+  h1.title1 Пользователи!
+
+  span Всего их на сайте #{userCount} 
+
+  if dataUsers.length
+    - each userItem in dataUsers
+      .admin-userItem
+        .admin-user-regDate= 'На сайте с ' + userItem.regDate.getDate() + '.' + userItem.regDate.getMonth() + '.' + userItem.regDate.getFullYear()
+        a.admin-user-ava(href="/user/"+userItem.login)
+          if userItem.avatar
+            img(src='/files/user/'+userItem.login+'/ava-60.jpg', width='60px')
+          else
+            img(src='/images/logo_150px.png', width='60px')
+        .admin-user-right
+          a.admin-user-login(href="/user/"+userItem.login)= userItem.login
+          br
+          span.admin-user-name= userItem.fname + ' ' + userItem.sname + ' ' + userItem.tname
+          br
+          span.admin-user-city= userItem.city
+  else
+    span Все ушли, бида пичаль
+
+  include ../../block/pagination
+
+block right_content
+  span Правый админский

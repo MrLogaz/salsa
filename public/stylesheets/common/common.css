@@ -1,7 +1,22 @@
 @import url(http://fonts.googleapis.com/css?family=Comfortaa:400,700,300&subset=latin,cyrillic);
 /*font-family: 'Comfortaa', cursive;*/
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,cyrillic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,cyrillic);*/
 /*font-family: 'Open Sans', sans-serif;*/
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/opensans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Comfortaa Light'), local('Comfortaa-Light'), url(/comfortaa.woff) format('woff');
+}
+
+
+
 body {
   font: 14px 'Comfortaa', cursive;
   background: rgba(255,255,255,1);
@@ -42,6 +57,7 @@ a:hover {
 .left-page-block {
   float: left;
   width: 641px;
+  border-right: 1px solid rgb(255,232,140);
 }
 .right-page-block {
   width: 341px;
@@ -58,4 +74,8 @@ a:hover {
 }
 .dnone {
   display: none;
+}
+
+.red-text {
+  color: rgb(230,40,30);
 }

@@ -71,17 +71,36 @@ exports.registryPost = function(req, res){
 };
 
 exports.list = function(req, res){
-  dbUser.findAll(function (err, dataUsers){
-    if(err) throw err
+  var skip = 0;
+  var limit = 5;
+  var page = 1;
+  if(req.query.p){
+    page = +req.query.p;
+    if(page != NaN && page > 0){
+      var skipAll = limit * (page-1);
+      if(skipAll < count)
+        skip = skipAll;
+      else
+        res.redirect('/events');
+    }else
+      res.redirect('/events');
+  }
+  function Render(dataUsers, uCount){
+    res.render('page/user/list', {
+      head: {
+        title: 'Танцоры' 
+      },
+      authorized: req.session.authorized,
+      user: req.cookies,
+      users: dataUsers,
+      pagination: {count: uCount, link: 'users', limit: limit, current: page}
+    });
+  }
+  dbUser.findAll(skip, limit, function (err, dataUsers){
+    if(err) throw err;
     else {
-      console.log(req.cookies);
-      res.render('page/user/list', {
-        head: {
-          title: 'Танцоры' 
-        },
-        authorized: req.session.authorized,
-        user: req.cookies,
-        users: dataUsers
+      dbUser.count(function(err, uCount){
+        Render(dataUsers, uCount);
       });
     }
   });

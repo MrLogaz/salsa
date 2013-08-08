@@ -163,6 +163,193 @@ isAwake()?n(d.bgOpacity,1):n(1,1))}function l(a,b){bq(p(),a,b)}function m(){b&&(
 case 40:g(a,0,b);break;case 27:d.allowSelect&&bb.release();break;case 9:return!0}return!1}var b=a('<input type="radio" />').css({position:"fixed",left:"-120px",width:"12px"}).addClass("jcrop-keymgr"),c=a("<div />").css({position:"absolute",overflow:"hidden"}).append(b);return d.keySupport&&(b.keydown(i).blur(f),h||!d.fixedSupport?(b.css({position:"absolute",left:"-20px"}),c.append(b).insertBefore(D)):b.insertBefore(D)),{watchKeys:e}}();Z.support&&M.bind("touchstart.jcrop",Z.newSelection),J.hide(),br(!0);var bs={setImage:bp,animateTo:bf,setSelect:bg,setOptions:bk,tellSelect:bi,tellScaled:bj,setClass:be,disable:bl,enable:bm,cancel:bn,release:bb.release,destroy:bo,focus:bd.watchKeys,getBounds:function(){return[E*T,F*U]},getWidgetSize:function(){return[E,F]},getScaleFactor:function(){return[T,U]},getOptions:function(){return d},ui:{holder:G,selection:K}};return g&&G.bind("selectstart",function(){return!1}),A.data("Jcrop",bs),bs},a.fn.Jcrop=function(b,c){var d;return this.each(function(){if(a(this).data("Jcrop")){if(
 b==="api")return a(this).data("Jcrop");a(this).data("Jcrop").setOptions(b)}else this.tagName=="IMG"?a.Jcrop.Loader(this,function(){a(this).css({display:"block",visibility:"hidden"}),d=a.Jcrop(this,b),a.isFunction(c)&&c.call(d)}):(a(this).css({display:"block",visibility:"hidden"}),d=a.Jcrop(this,b),a.isFunction(c)&&c.call(d))}),this},a.Jcrop.Loader=function(b,c,d){function g(){f.complete?(e.unbind(".jcloader"),a.isFunction(c)&&c.call(f)):window.setTimeout(g,50)}var e=a(b),f=e[0];e.bind("load.jcloader",g).bind("error.jcloader",function(b){e.unbind(".jcloader"),a.isFunction(d)&&d.call(f)}),f.complete&&a.isFunction(c)&&(e.unbind(".jcloader"),c.call(f))},a.Jcrop.defaults={allowSelect:!0,allowMove:!0,allowResize:!0,trackDocument:!0,baseClass:"jcrop",addClass:null,bgColor:"black",bgOpacity:.6,bgFade:!1,borderOpacity:.4,handleOpacity:.5,handleSize:null,aspectRatio:0,keySupport:!0,createHandles:["n","s","e","w","nw","ne","se","sw"],createDragbars:["n","s","e","w"],createBorders:["n","s","e","w"],drawBorders:!0,dragEdges
 :!0,fixedSupport:!0,touchSupport:null,shade:null,boxWidth:0,boxHeight:0,boundary:2,fadeTime:400,animationDelay:20,swingSpeed:3,minSelect:[0,0],maxSize:[0,0],minSize:[0,0],onChange:function(){},onSelect:function(){},onDblClick:function(){},onRelease:function(){}}})(jQuery);
+/**
+*  Ajax Autocomplete for jQuery, version 1.2.7
+*  (c) 2013 Tomas Kirda
+*
+*  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
+*  For details, see the web site: http://www.devbridge.com/projects/autocomplete/jquery/
+*
+*/
+(function(e){"function"===typeof define&&define.amd?define(["jquery"],e):e(jQuery)})(function(e){function g(a,b){var c=function(){},c={autoSelectFirst:!1,appendTo:"body",serviceUrl:null,lookup:null,onSelect:null,width:"auto",minChars:1,maxHeight:300,deferRequestBy:0,params:{},formatResult:g.formatResult,delimiter:null,zIndex:9999,type:"GET",noCache:!1,onSearchStart:c,onSearchComplete:c,containerClass:"autocomplete-suggestions",tabDisabled:!1,dataType:"text",lookupFilter:function(a,b,c){return-1!==
+a.value.toLowerCase().indexOf(c)},paramName:"query",transformResult:function(a){return"string"===typeof a?e.parseJSON(a):a}};this.element=a;this.el=e(a);this.suggestions=[];this.badQueries=[];this.selectedIndex=-1;this.currentValue=this.element.value;this.intervalId=0;this.cachedResponse=[];this.onChange=this.onChangeInterval=null;this.isLocal=this.ignoreValueChange=!1;this.suggestionsContainer=null;this.options=e.extend({},c,b);this.classes={selected:"autocomplete-selected",suggestion:"autocomplete-suggestion"};
+this.initialize();this.setOptions(b)}var h={extend:function(a,b){return e.extend(a,b)},createNode:function(a){var b=document.createElement("div");b.innerHTML=a;return b.firstChild}};g.utils=h;e.Autocomplete=g;g.formatResult=function(a,b){var c="("+b.replace(RegExp("(\\/|\\.|\\*|\\+|\\?|\\||\\(|\\)|\\[|\\]|\\{|\\}|\\\\)","g"),"\\$1")+")";return a.value.replace(RegExp(c,"gi"),"<strong>$1</strong>")};g.prototype={killerFn:null,initialize:function(){var a=this,b="."+a.classes.suggestion,c=a.classes.selected,
+d=a.options,f;a.element.setAttribute("autocomplete","off");a.killerFn=function(b){0===e(b.target).closest("."+a.options.containerClass).length&&(a.killSuggestions(),a.disableKillerFn())};if(!d.width||"auto"===d.width)d.width=a.el.outerWidth();a.suggestionsContainer=g.utils.createNode('<div class="'+d.containerClass+'" style="position: absolute; display: none;"></div>');f=e(a.suggestionsContainer);f.appendTo(d.appendTo).width(d.width);f.on("mouseover.autocomplete",b,function(){a.activate(e(this).data("index"))});
+f.on("mouseout.autocomplete",function(){a.selectedIndex=-1;f.children("."+c).removeClass(c)});f.on("click.autocomplete",b,function(){a.select(e(this).data("index"),!1)});a.fixPosition();if(window.opera)a.el.on("keypress.autocomplete",function(b){a.onKeyPress(b)});else a.el.on("keydown.autocomplete",function(b){a.onKeyPress(b)});a.el.on("keyup.autocomplete",function(b){a.onKeyUp(b)});a.el.on("blur.autocomplete",function(){a.onBlur()});a.el.on("focus.autocomplete",function(){a.fixPosition()})},onBlur:function(){this.enableKillerFn()},
+setOptions:function(a){var b=this.options;h.extend(b,a);if(this.isLocal=e.isArray(b.lookup))b.lookup=this.verifySuggestionsFormat(b.lookup);e(this.suggestionsContainer).css({"max-height":b.maxHeight+"px",width:b.width+"px","z-index":b.zIndex})},clearCache:function(){this.cachedResponse=[];this.badQueries=[]},clear:function(){this.clearCache();this.currentValue=null;this.suggestions=[]},disable:function(){this.disabled=!0},enable:function(){this.disabled=!1},fixPosition:function(){var a;"body"===this.options.appendTo&&
+(a=this.el.offset(),e(this.suggestionsContainer).css({top:a.top+this.el.outerHeight()+"px",left:a.left+"px"}))},enableKillerFn:function(){e(document).on("click.autocomplete",this.killerFn)},disableKillerFn:function(){e(document).off("click.autocomplete",this.killerFn)},killSuggestions:function(){var a=this;a.stopKillSuggestions();a.intervalId=window.setInterval(function(){a.hide();a.stopKillSuggestions()},300)},stopKillSuggestions:function(){window.clearInterval(this.intervalId)},onKeyPress:function(a){if(!this.disabled&&
+!this.visible&&40===a.keyCode&&this.currentValue)this.suggest();else if(!this.disabled&&this.visible){switch(a.keyCode){case 27:this.el.val(this.currentValue);this.hide();break;case 9:case 13:if(-1===this.selectedIndex){this.hide();return}this.select(this.selectedIndex,13===a.keyCode);if(9===a.keyCode&&!1===this.options.tabDisabled)return;break;case 38:this.moveUp();break;case 40:this.moveDown();break;default:return}a.stopImmediatePropagation();a.preventDefault()}},onKeyUp:function(a){var b=this;
+if(!b.disabled){switch(a.keyCode){case 38:case 40:return}clearInterval(b.onChangeInterval);if(b.currentValue!==b.el.val())if(0<b.options.deferRequestBy)b.onChangeInterval=setInterval(function(){b.onValueChange()},b.options.deferRequestBy);else b.onValueChange()}},onValueChange:function(){var a;clearInterval(this.onChangeInterval);this.currentValue=this.element.value;a=this.getQuery(this.currentValue);this.selectedIndex=-1;this.ignoreValueChange?this.ignoreValueChange=!1:a.length<this.options.minChars?
+this.hide():this.getSuggestions(a)},getQuery:function(a){var b=this.options.delimiter;if(!b)return e.trim(a);a=a.split(b);return e.trim(a[a.length-1])},getSuggestionsLocal:function(a){var b=a.toLowerCase(),c=this.options.lookupFilter;return{suggestions:e.grep(this.options.lookup,function(d){return c(d,a,b)})}},getSuggestions:function(a){var b,c=this,d=c.options,f=d.serviceUrl;(b=c.isLocal?c.getSuggestionsLocal(a):c.cachedResponse[a])&&e.isArray(b.suggestions)?(c.suggestions=b.suggestions,c.suggest()):
+c.isBadQuery(a)||(d.params[d.paramName]=a,!1!==d.onSearchStart.call(c.element,d.params)&&(e.isFunction(d.serviceUrl)&&(f=d.serviceUrl.call(c.element,a)),e.ajax({url:f,data:d.ignoreParams?null:d.params,type:d.type,dataType:d.dataType}).done(function(b){c.processResponse(b,a);d.onSearchComplete.call(c.element,a)})))},isBadQuery:function(a){for(var b=this.badQueries,c=b.length;c--;)if(0===a.indexOf(b[c]))return!0;return!1},hide:function(){this.visible=!1;this.selectedIndex=-1;e(this.suggestionsContainer).hide()},
+suggest:function(){if(0===this.suggestions.length)this.hide();else{var a=this.options.formatResult,b=this.getQuery(this.currentValue),c=this.classes.suggestion,d=this.classes.selected,f=e(this.suggestionsContainer),g="";e.each(this.suggestions,function(d,e){g+='<div class="'+c+'" data-index="'+d+'">'+a(e,b)+"</div>"});f.html(g).show();this.visible=!0;this.options.autoSelectFirst&&(this.selectedIndex=0,f.children().first().addClass(d))}},verifySuggestionsFormat:function(a){return a.length&&"string"===
+typeof a[0]?e.map(a,function(a){return{value:a,data:null}}):a},processResponse:function(a,b){var c=this.options,d=c.transformResult(a,b);d.suggestions=this.verifySuggestionsFormat(d.suggestions);c.noCache||(this.cachedResponse[d[c.paramName]]=d,0===d.suggestions.length&&this.badQueries.push(d[c.paramName]));b===this.getQuery(this.currentValue)&&(this.suggestions=d.suggestions,this.suggest())},activate:function(a){var b=this.classes.selected,c=e(this.suggestionsContainer),d=c.children();c.children("."+
+b).removeClass(b);this.selectedIndex=a;return-1!==this.selectedIndex&&d.length>this.selectedIndex?(a=d.get(this.selectedIndex),e(a).addClass(b),a):null},select:function(a,b){var c=this.suggestions[a];c&&(this.el.val(c),this.ignoreValueChange=b,this.hide(),this.onSelect(a))},moveUp:function(){-1!==this.selectedIndex&&(0===this.selectedIndex?(e(this.suggestionsContainer).children().first().removeClass(this.classes.selected),this.selectedIndex=-1,this.el.val(this.currentValue)):this.adjustScroll(this.selectedIndex-
+1))},moveDown:function(){this.selectedIndex!==this.suggestions.length-1&&this.adjustScroll(this.selectedIndex+1)},adjustScroll:function(a){var b=this.activate(a),c,d;b&&(b=b.offsetTop,c=e(this.suggestionsContainer).scrollTop(),d=c+this.options.maxHeight-25,b<c?e(this.suggestionsContainer).scrollTop(b):b>d&&e(this.suggestionsContainer).scrollTop(b-this.options.maxHeight+25),this.el.val(this.getValue(this.suggestions[a].value)))},onSelect:function(a){var b=this.options.onSelect;a=this.suggestions[a];
+this.el.val(this.getValue(a.value));e.isFunction(b)&&b.call(this.element,a)},getValue:function(a){var b=this.options.delimiter,c;if(!b)return a;c=this.currentValue;b=c.split(b);return 1===b.length?a:c.substr(0,c.length-b[b.length-1].length)+a},dispose:function(){this.el.off(".autocomplete").removeData("autocomplete");this.disableKillerFn();e(this.suggestionsContainer).remove()}};e.fn.autocomplete=function(a,b){return 0===arguments.length?this.first().data("autocomplete"):this.each(function(){var c=
+e(this),d=c.data("autocomplete");if("string"===typeof a){if(d&&"function"===typeof d[a])d[a](b)}else d&&d.dispose&&d.dispose(),d=new g(this,a),c.data("autocomplete",d)})}});
+// (function($){
+//     $(function() {
+//         var token = '51fa49542fb2b4206b000004';
+//         var key = '48b344a5f1002c6ef5354c9eda3a4a0ff58f2bbc';        
+        
+//         var city = $( '[name="city"]' );
+//         var street = $( '[name="address"]' );
+//         var building = $( '[name="building"]' );
+//         var buildingAdd = $( '[name="building-add"]' );
+
+//         var map = null;
+//         var placemark = null;
+//         var map_created = false;
+
+//         var Label = function( obj, query ){
+//             var label = '';
+
+//             if(obj.name){
+//                 if(obj.typeShort){
+//                     label += '<span class="ac-s2">' + obj.typeShort + '. ' + '</span>';
+//                 }
+
+//                 if(query.length < obj.name.length){
+//                     label += '<span class="ac-s">' + obj.name.substr(0, query.length) + '</span>';
+//                     label += '<span class="ac-s2">' + obj.name.substr(query.length, obj.name.length - query.length) + '</span>';
+//                 } else {
+//                     label += '<span class="ac-s">' + obj.name + '</span>';
+//                 }
+//             }
+
+//             if(obj.parents){
+//                 for(var k = obj.parents.length-1; k>-1; k--){
+//                     var parent = obj.parents[k];
+//                     if(parent.name){
+//                         if(label) label += '<span class="ac-st">, </span>';
+//                         label += '<span class="ac-st">' + parent.name + ' ' + parent.typeShort + '.</span>';
+//                     }
+//                 }
+//             }
+
+//             return label;
+//         };
+
+//         var MapUpdate = function(){
+//             var zoom = 12;
+//             var address = '';
+
+//             var cityVal = $.trim(city.val());
+//             if(cityVal){
+//                 var cityObj = city.data( "kladr-obj" );
+//                 if(address) address += ', ';
+//                 address += ( cityObj ? (cityObj.typeShort + ' ') : '' ) + cityVal;
+//                 zoom = 10;
+//             }
+
+//             var streetVal = $.trim(street.val());
+//             if(streetVal){
+//                 var streetObj = street.data( "kladr-obj" );
+//                 if(address) address += ', ';
+//                 address += ( streetObj ? (streetObj.typeShort + ' ') : '' ) + streetVal;
+//                 zoom = 15;
+//             }
+
+//             var buildingVal = $.trim(building.val());
+//             if(buildingVal){
+//                 var buildingObj = building.data( "kladr-obj" );
+//                 if(address) address += ', ';
+//                 address += ( buildingObj ? (buildingObj.typeShort + ' ') : '' ) + buildingVal;
+//                 zoom = 16;
+//             }
+
+//             var buildingAddVal = $.trim(buildingAdd.val());
+//             if(buildingAddVal){
+//                 if(address) address += ', ';
+//                 address += buildingAddVal;
+//                 zoom = 16;
+//             }
+
+//             if(address && map_created){
+//                 $('#map').show();
+//                 var geocode = ymaps.geocode(address);
+//                 geocode.then(function(res){
+//                     map.geoObjects.each(function (geoObject) {
+//                             map.geoObjects.remove(geoObject);
+//                     });
+
+//                     var position = res.geoObjects.get(0).geometry.getCoordinates();
+
+//                     placemark = new ymaps.Placemark(position, {}, {});
+
+//                     map.geoObjects.add(placemark);
+//                     map.setCenter(position, zoom);
+//                 });
+//             }
+//         }
+
+//         city.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.CITY,
+//             withParents: true,
+//             label: Label,
+//             filter: function(array, term){
+//               var newArr = [];
+//               for(i=0;i<array.length;i++){
+//                 if(array[i].typeShort == "г"){
+//                   newArr.push(array[i]);
+//                 }
+//               }
+//               return newArr;
+//             },
+//             select: function( event, ui ) {
+//                 city.data( "kladr-obj", ui.item.obj );
+//                 // city.parent().find( 'label' ).text( ui.item.obj.type );
+//                 street.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 building.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 MapUpdate();
+//                 $('#ec_cityid').val(ui.item.obj.id);
+//             }
+//         });
+
+//         street.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.STREET,
+//             label: Label,
+//             select: function( event, ui ) {
+//                 street.data( "kladr-obj", ui.item.obj );
+//                 // street.parent().find( 'label' ).text( ui.item.obj.type );
+//                 building.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 MapUpdate();
+//             }
+//         });
+
+//         building.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.BUILDING,
+//             label: Label,
+//             select: function( event, ui ) {
+//                 building.data( "kladr-obj", ui.item.obj );
+//                 MapUpdate();
+//             }
+//         });
+
+//         city.add(street).add(building).add(buildingAdd).change(function(){
+//             MapUpdate();
+//         });
+
+//         ymaps.ready(function(){
+//             if(map_created) return;
+//             map_created = true;
+
+//             map = new ymaps.Map('map', {
+//                 center: [55.76, 37.64],
+//                 zoom: 12
+//             });
+
+//             map.controls.add('smallZoomControl', { top: 5, left: 5 });
+//         });
+//     });
+// })(jQuery);
 var popup = {
 	popupInput: function(id, msg){
     var offset = $('#' + id).offset();
@@ -326,3 +513,183 @@ var user_registry = {
       return false;
   }
 };
+var yamapCity = $(".city_for_map"),
+    yamapStreet = $(".street_for_map"),
+    yamapBuilding = $(".house_for_map");
+var map = null;
+var placemark = null;
+var map_created = false;
+
+var yamaps = {
+  mapInit: function(){
+
+    ymaps.ready(function(){
+      
+      if(map_created) return;
+        map_created = true;
+        map = new ymaps.Map('yamap', {
+          center: [50.76, 40.64],
+          zoom: 12
+        });
+        map.controls.add('smallZoomControl', { top: 5, left: 5 });
+        yamapCity.add(yamapStreet).add(yamapBuilding).keypress(function(){
+          yamaps.mapUpdate();
+        });
+        yamapCity.add(yamapStreet).add(yamapBuilding).change(function(){
+          yamaps.mapUpdate();
+        });
+    });
+  },
+  mapUpdate: function(){
+    var zoom = 12;
+    var address = '';
+
+    var cityVal = $.trim(yamapCity.val());
+    if(cityVal){
+        if(address) address += ', ';
+        address += cityVal;
+        zoom = 10;
+    }
+
+    var streetVal = $.trim(yamapStreet.val());
+    if(streetVal){
+        if(address) address += ', ';
+        address += streetVal;
+        zoom = 13;
+    }
+
+    var buildingVal = $.trim(yamapBuilding.val());
+    if(buildingVal){
+        if(address) address += ', ';
+        address += buildingVal;
+        zoom = 16;
+    }
+
+    if(address && map_created){
+      $('#yamap').show();
+      var geocode = ymaps.geocode(address);
+      geocode.then(function(res){
+        map.geoObjects.each(function (geoObject) {
+          map.geoObjects.remove(geoObject);
+        });
+        
+        var position = res.geoObjects.get(0).geometry.getCoordinates();
+        console.log(position);
+        placemark = new ymaps.Placemark(position, {}, {});
+        //http://api.yandex.ru/maps/jsbox/button_layout
+        map.geoObjects.add(placemark);
+        map.setCenter(position, zoom);
+      });
+    }
+  }
+}
+
+
+
+//     $(function() {
+//         var token = '51fa49542fb2b4206b000004';
+//         var key = '48b344a5f1002c6ef5354c9eda3a4a0ff58f2bbc';        
+        
+//         var city = $( '[name="city"]' );
+//         var street = $( '[name="address"]' );
+//         var building = $( '[name="building"]' );
+//         var buildingAdd = $( '[name="building-add"]' );
+
+
+//         var Label = function( obj, query ){
+//             var label = '';
+
+//             if(obj.name){
+//                 if(obj.typeShort){
+//                     label += '<span class="ac-s2">' + obj.typeShort + '. ' + '</span>';
+//                 }
+
+//                 if(query.length < obj.name.length){
+//                     label += '<span class="ac-s">' + obj.name.substr(0, query.length) + '</span>';
+//                     label += '<span class="ac-s2">' + obj.name.substr(query.length, obj.name.length - query.length) + '</span>';
+//                 } else {
+//                     label += '<span class="ac-s">' + obj.name + '</span>';
+//                 }
+//             }
+
+//             if(obj.parents){
+//                 for(var k = obj.parents.length-1; k>-1; k--){
+//                     var parent = obj.parents[k];
+//                     if(parent.name){
+//                         if(label) label += '<span class="ac-st">, </span>';
+//                         label += '<span class="ac-st">' + parent.name + ' ' + parent.typeShort + '.</span>';
+//                     }
+//                 }
+//             }
+
+//             return label;
+//         };
+
+//         var 
+
+//         city.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.CITY,
+//             withParents: true,
+//             label: Label,
+//             filter: function(array, term){
+//               var newArr = [];
+//               for(i=0;i<array.length;i++){
+//                 if(array[i].typeShort == "г"){
+//                   newArr.push(array[i]);
+//                 }
+//               }
+//               return newArr;
+//             },
+//             select: function( event, ui ) {
+//                 city.data( "kladr-obj", ui.item.obj );
+//                 // city.parent().find( 'label' ).text( ui.item.obj.type );
+//                 street.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 building.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 MapUpdate();
+//                 $('#ec_cityid').val(ui.item.obj.id);
+//             }
+//         });
+
+//         street.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.STREET,
+//             label: Label,
+//             select: function( event, ui ) {
+//                 street.data( "kladr-obj", ui.item.obj );
+//                 // street.parent().find( 'label' ).text( ui.item.obj.type );
+//                 building.kladr( 'option', { parentType: $.ui.kladrObjectType.CITY, parentId: ui.item.obj.id } );
+//                 MapUpdate();
+//             }
+//         });
+
+//         building.kladr({
+//             token: token,
+//             key: key,
+//             type: $.ui.kladrObjectType.BUILDING,
+//             label: Label,
+//             select: function( event, ui ) {
+//                 building.data( "kladr-obj", ui.item.obj );
+//                 MapUpdate();
+//             }
+//         });
+
+//         city.add(street).add(building).add(buildingAdd).change(function(){
+//             MapUpdate();
+//         });
+
+//         ymaps.ready(function(){
+//             if(map_created) return;
+//             map_created = true;
+
+//             map = new ymaps.Map('map', {
+//                 center: [55.76, 37.64],
+//                 zoom: 12
+//             });
+
+//             map.controls.add('smallZoomControl', { top: 5, left: 5 });
+//         });
+//     });
+// })(jQuery);

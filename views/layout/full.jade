@@ -6,6 +6,8 @@ html
     link(rel="shortcut icon", href="/images/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/style.css')
     script(rel='javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
+    script(src="http://api-maps.yandex.ru/2.0.18/?load=package.standard&mode=release&lang=ru-RU", type="text/javascript")
+
     
     
   body(onload="init.common();")
@@ -18,4 +20,5 @@ html
       #popup-input
 
     block popupInfo
+    
     script(rel='javascript', src='/scripts.js')

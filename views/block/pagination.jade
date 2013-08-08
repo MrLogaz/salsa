@@ -4,12 +4,12 @@ if (pagination && pagination.count > pagination.limit)
       a.pagination_item.pagination_begin(href="/" + pagination.link) В начало
       -var count = Math.ceil(pagination.count/pagination.limit)
       
-      if pagination.current > 5
-        -var curPage = pagination.current - 4
-        -var maxPage = pagination.current + 5
+      if pagination.current > 4
+        -var curPage = pagination.current - 3
+        -var maxPage = pagination.current + 4
       else
         -var curPage = 1
-        -var maxPage = pagination.current + 5
+        -var maxPage = pagination.current + 4
       -for(i=curPage; count>=i && i<maxPage;i++)
         if (pagination.current == i)
           span.pagination_item.pagination_current= i

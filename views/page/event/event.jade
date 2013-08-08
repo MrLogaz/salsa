@@ -14,33 +14,33 @@ block left_content
         .author-name
           a(href="/" + post.behalf + "/" + author.login)= author.fname + ' ' + author.sname
           .post-date
-            span.date-day= post.date.getDate()
-            span.date-month(data-value=post.date.getMonth())= post.date.getMonth()
-            span.date-year= post.date.getFullYear()
-        a.post-title(href="/events/" + post.latUrl)= post.title
+            span.date-day= post.created.getDate()
+            span.date-month(data-value=post.created.getMonth())= post.created.getMonth()
+            span.date-year(data-value=post.created.getFullYear())= post.created.getFullYear()
+        span.post-title= post.title
 
-    //- .post-anons= post.anons
+    
     .post-event
       .event-data
+        .city
+          span.key Город:
+          span.val= post.city
         .adress
           span.key Адрес:
           span.val= post.address
-        //- .dateFrom
-        //-   span.key Начало:
-        //-   span.val= post.data.dateFrom.d + '.' + post.data.dateFrom.m + '.' + post.data.dateFrom.y + ' в ' + post.data.dateFrom.H + ':' + post.data.dateFrom.M
+        .date
+          span.key Дата:
+          span.val= post.date.getDate() + '.' + post.date.getMonth() + '.' + post.date.getFullYear()
         //- .dateTo
         //-   span.key Конец:
         //-   span.val= post.data.dateTo.d + '.' + post.data.dateTo.m + '.' + post.data.dateTo.y + ' в ' + post.data.dateTo.H + ':' + post.data.dateTo.M
         .price
           span.key Цена:
           span.val= post.price
-        //- .tel
-        //-   span.key Телефон:
-        //-   span.val= post.data.tel
-      .post-text=post.text
-      if post.preview
-        .post-preview
-          img(src="/files/post/p" + post.id + "/prew.jpg")
+    .post-text!= post.text
+    if post.avatar
+      .post-preview
+        img(src="/files/event/" + post.latUrl + "/ava-prev.jpg")
 
 
 block right_content

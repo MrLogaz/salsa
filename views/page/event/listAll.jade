@@ -1,7 +1,7 @@
 extends ../../layout/home
   
 block left_content
-
+  
   if posts.length
     .vs-feed
       - each post in posts
@@ -16,32 +16,35 @@ block left_content
               .author-name
                 a(href="/user/" + post.authorLogin)= post.authorFname + ' ' + post.authorSname
                 .post-date
-                  span.date-day= post.date.getDate()
-                  span.date-month(data-value=post.date.getMonth())= post.date.getMonth()
-                  span.date-year(data-value=post.date.getFullYear())= post.date.getFullYear()
+                  span.date-day= post.created.getDate()
+                  span.date-month(data-value=post.created.getMonth())= post.created.getMonth()
+                  span.date-year(data-value=post.created.getFullYear())= post.created.getFullYear()
               a.post-title(href="/events/" + post.latUrl)= post.title
 
           .post-anons= post.anons
           .post-event
             .event-data
+              .city
+                span.key Город:
+                span.val= post.city
               .adress
                 span.key Адрес:
                 span.val= post.address
-              //- .dateFrom
-              //-   span.key Начало:
-              //-   span.val= post.data.dateFrom.d + '.' + post.data.dateFrom.m + '.' + post.data.dateFrom.y + ' в ' + post.data.dateFrom.H + ':' + post.data.dateFrom.M
+              .date
+                span.key Дата:
+                span.val
+                  span.date-day= post.date.getDate()
+                  span.date-month(data-value=post.date.getMonth())= post.date.getMonth()
+                  span.date-year(data-value=post.date.getFullYear())= post.date.getFullYear()
               //- .dateTo
               //-   span.key Конец:
               //-   span.val= post.data.dateTo.d + '.' + post.data.dateTo.m + '.' + post.data.dateTo.y + ' в ' + post.data.dateTo.H + ':' + post.data.dateTo.M
               .price
                 span.key Цена:
                 span.val= post.price
-              //- .tel
-              //-   span.key Телефон:
-              //-   span.val= post.data.tel
             if post.avatar
               .post-preview
-                img(src="/files/event/" + post.latUrl + "/prev.jpg")
+                img(src="/files/event/" + post.latUrl + "/ava-prev.jpg")
 
     include ../../block/pagination
 
@@ -50,4 +53,5 @@ block left_content
 
 
 block right_content
-  p Правая колонка
+  if authorized
+    a.button.right-column-button(href="/events/create") Добавить событие

@@ -8,6 +8,7 @@ var express = require('express')
 var routes = require('./routes')
   , user = require('./routes/user')
   , profile = require('./routes/profile')
+  , admin = require('./routes/admin')
   , event = require('./routes/event');
 
 var app = express();
@@ -74,7 +75,9 @@ app.post('/events/titleCheck', event.titleCheck);
 app.get('/events/:title', authorized.check, event.eventPage);
 
 
-
+//ADMIN
+app.get('/admin', authorized.check, admin.main);
+app.get('/admin/users', authorized.check, admin.users);
 
 
 http.createServer(app).listen(app.get('port'), function(){

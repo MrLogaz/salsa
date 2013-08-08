@@ -1,5 +1,13 @@
 extends ../../layout/home
 
+block metaHead
+  script(src="http://api-maps.yandex.ru/2.0.18/?load=package.standard&mode=release&lang=ru-RU", type="text/javascript")
+  script(src="/lib/pickadate/picker.js", type="text/javascript")
+  script(src="/lib/pickadate/picker.date.js", type="text/javascript")
+  link(rel='stylesheet', href='/lib/pickadate/classic.css')
+  link(rel='stylesheet', href='/lib/pickadate/classic.date.css')
+  
+
 block left_content
 
   form.form#eventCreate(method="post", action="/events/create", enctype="multipart/form-data")
@@ -10,19 +18,68 @@ block left_content
         input#ec_title(type="text", tabindex="1", name="title", onchange="event_create.titleCheck($(this).val())", placeholder="Название")
       .field
         label(for="ec_anons") Анонс
-        textarea#ec_anons(tabindex="2", name="anons", placeholder="Краткое описание")
+        textarea#ec_anons(tabindex="2", name="anons")
       .field
-        label(for="ec_text") Текст
-        textarea#ec_text(tabindex="3", name="text", placeholder="Подробное описание")
+        label(for="ec_text") Описание
+        textarea#ec_text(tabindex="3", name="text")
       .field
-        label(for="ec_region") Регион
-        input#ec_region(type="text", tabindex="4", name="region", placeholder="Регион")
+        label(for="ec_date") Дата
+        input#ec_date(type="text", tabindex="4", name="date", placeholder="Выберите дату")
+        script.
+          $('#ec_date').pickadate({
+            monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            weekdaysShort: ['Вос', 'Пон', 'Втр', 'Срд', 'Чет', 'Пят', 'Суб'],
+            today: 'Сегодня',
+            clear: '',
+            min: -1,
+            format: 'd mmmm, yyyy',
+            formatSubmit: 'mm.dd.yyyy',
+            hiddenSuffix: '_hidden',
+            firstDay: 1
+          });
       .field
-        label(for="ec_address") Адрес
-        input#ec_address(type="text", tabindex="5", name="address", placeholder="Адрес")
+        label(for="ec_city") Город
+        input#ec_city.city_for_map(type="text", tabindex="5", name="city", placeholder="Город")
+        input#ec_cityid(type="hidden", name="cityid")
+        script.
+          $.ajax({
+            url: "/json/cityjsonfront.json",
+            dataType: "json"
+          }).done(function(cityjson){
+            $("#ec_city").focusout(function(){
+              var val = $(this).val();
+              yamaps.mapUpdate();
+              for(i=0;i<cityjson.length;i++){
+                if(cityjson[i].value===val){
+                  $('#ec_cityid').val(cityjson[i].data);
+                  return false;
+                }
+              }
+            });
+            $(document).ready(function(){
+              $("#ec_city").autocomplete({
+                minChars: 3,
+                maxHeight: 250,
+                lookup: cityjson,
+                onSelect: function(val, data){
+                  $('#ec_cityid').val(val.data);
+                }
+              });
+              yamaps.mapInit();
+            });
+            
+          });
+      .field
+        label(for="ec_street") Адрес
+        input#ec_street.street_for_map(type="text", tabindex="6", name="street", placeholder="Улица")
+        input#ec_house.house_for_map(type="number", tabindex="7", name="house", placeholder="Дом")
+      .field
+        #yamap
+        
+
       .field
         label(for="ec_price") Цена
-        input#ec_price(type="text", tabindex="6", name="price", placeholder="Цена")
+        input#ec_price(type="text", tabindex="8", name="price", placeholder="Цена")
       .field
         label(for="form_avatar") Аватар
         input.form-file#event_avatar(type="file", name="avatar", onchange="image.showPreview('previewImgEvent', 'event_avatar');")
@@ -44,7 +101,7 @@ block left_content
         input(type="hidden", name="behalfid", value=user.user_id)
       
       .field.field-right
-        input#ur_submit(type="submit", tabindex="7", value="Создать")
+        input#ur_submit(type="submit", tabindex="9", value="Создать")
 
 block right_content
   .userRegistryInfo

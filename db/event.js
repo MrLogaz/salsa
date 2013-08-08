@@ -34,11 +34,11 @@ queryEvent.prototype.count = function(callback) {
     });
 };
 //findAll
-queryEvent.prototype.findAll = function(skip, callback) {
+queryEvent.prototype.findAll = function(skip, limit, callback) {
     this.getCollection(function(err, event_collection) {
       if(err) callback(err)
       else {
-        event_collection.find().skip(skip).limit(5).sort({ date: -1 }).toArray(function(err, results) {
+        event_collection.find().skip(skip).limit(limit).sort({ created: -1 }).toArray(function(err, results) {
           if(err) callback(err)
           else callback(null, results)
         });

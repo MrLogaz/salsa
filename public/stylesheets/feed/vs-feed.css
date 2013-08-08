@@ -1,7 +1,6 @@
 .vs-feed {
   padding: 10px 0px 10px 0;
   width: 640px;
-  border-right: 1px solid rgb(255,232,140);
 }
 .feed-row {
   position: relative;
@@ -92,4 +91,7 @@
 }
 .feed-row .event-data .val {
   font-size: 14px;
+}
+.feed-row .post-text {
+  padding: 20px 0;
 }

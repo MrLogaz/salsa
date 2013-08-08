@@ -6,7 +6,8 @@ html
     link(rel="shortcut icon", href="/images/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/style.css')
     script(rel='javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
-    
+    block metaHead
+
     
   body(onload="init.common();")
     .page-wraper
@@ -23,7 +24,4 @@ html
     #blanket(style="display:none;", onclick="popup.popupInfo('popupInfo');")
     #popupInfo(style="display:none;")
       block popupInfo
-      
-
-
     script(rel='javascript', src='/scripts.js')

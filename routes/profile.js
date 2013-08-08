@@ -2,7 +2,7 @@ var path = require('path');
 var fs = require('fs');
 var gm = require('gm');
 var queryUser = require('../db/user').queryUser;
-var region = require('../db/region');
+var city = require('../db/cityjson');
 var dbUser = new queryUser('localhost', 27017);
 var crypto = require('crypto');
 

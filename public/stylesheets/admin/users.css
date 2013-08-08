@@ -1,0 +1,33 @@
+.admin-userItem {
+	position: relative;
+	border-bottom: 1px solid rgb(255,200,65);
+	padding: 10px;
+	vertical-align: top;
+	height: 60px;
+}
+.admin-userItem:last-child {
+	border: none;
+}
+
+.admin-user-ava {
+	display: inline-block;
+	vertical-align: top;
+}
+.admin-user-right {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 0 0 20px;
+	width: 520px;
+}
+.admin-user-login {
+	font-size: 18px;
+}
+.admin-user-city {
+	color: rgb(206,100,0);
+}
+.admin-user-regDate {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	color: rgb(120,120,120);
+}

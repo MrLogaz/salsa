@@ -22,12 +22,24 @@ queryUser.prototype.getCollection = function(callback) {
   });
 };
 
-//findAll
-queryUser.prototype.findAll = function(callback) {
+queryUser.prototype.count = function(callback) {
     this.getCollection(function(err, user_collection) {
       if(err) callback(err)
       else {
-        user_collection.find().toArray(function(err, results) {
+        user_collection.count(function(err, results) {
+          if(err) callback(err)
+          else callback(null, results)
+        });
+      }
+    });
+};
+
+//findAll
+queryUser.prototype.findAll = function(skip, limit, callback) {
+    this.getCollection(function(err, user_collection) {
+      if(err) callback(err)
+      else {
+        user_collection.find().skip(skip).limit(limit).sort({ regDate: -1 }).toArray(function(err, results) {
           if(err) callback(err)
           else callback(null, results)
         });

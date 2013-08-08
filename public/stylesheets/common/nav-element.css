@@ -1,0 +1,28 @@
+.button {
+	position: relative;
+	display: inline-block;
+	background: rgb(255,224,63);
+	border: 1px solid rgb(240,180,65);
+	border-radius: 3px;
+	padding: 3px 5px;
+	color: rgb(0,0,0);
+	text-shadow: 0 0 3px rgb(240,240,240);
+}
+.button:hover {
+	color: rgb(0,0,0);
+	text-decoration: none;
+	border-color: rgb(250,190,75);
+	background: rgb(255,234,83);
+}
+.big-button {
+	padding: 10px 20px;
+	font-size: 18px;
+}
+.right-column-button {
+	width: 331px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	vertical-align: middle;
+	font-size: 20px;
+}

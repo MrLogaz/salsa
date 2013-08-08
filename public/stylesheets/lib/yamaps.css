@@ -1,0 +1,9 @@
+#yamap {
+	width: 575px;
+	height: 300px;
+	padding: 5px;
+	background: rgba(235,180,80,0.5);
+	border: 1px solid rgb(245,182,61);
+	border-radius: 4px;
+	display: none;
+}
